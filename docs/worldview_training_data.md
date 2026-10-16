@@ -11,7 +11,7 @@
 
 ### 1.1 已有数据（不需核对）
 
-已在用 PanCollection WV3（训练约 1 万组、验证约 1,080 组、测试 20+20 景）与 WV2（测试 20+20 景），8 波段，比例 4，11 bit，归一化除以 2047，波段顺序 Coastal, Blue, Green, Yellow, Red, Red Edge, NIR1, NIR2。本文档只讨论**在此基础上新增**的数据。
+已在用 PanCollection 全部四个子集：WV3（训练约 1 万组、验证约 1,080 组、测试 20+20 景）、WV2（测试 20+20 景）、QB 与 GF2（各约 2 万组训练 + 20+20 景测试，4 波段），以及 DLPan-Toolbox。WV3 / WV2 为 8 波段，比例 4，11 bit，归一化除以 2047，波段顺序 Coastal, Blue, Green, Yellow, Red, Red Edge, NIR1, NIR2。本文档只讨论**在此基础上新增**的 WorldView 数据。
 
 **PanCollection WV3 测试景位置（已知）**：来自里约热内卢（Rio de Janeiro）与的黎波里（Tripoli）两座城市。全分辨率（FR）测试集全部在的黎波里；降分辨率（RR）测试集两城都有。因此**新增训练数据须排除这两座城市及其周边**，含 WV-2 影像（避免跨传感器评估时泄漏）。
 
@@ -117,10 +117,9 @@ Wald 协议生成（`MTF`、`interp23tap`）与评估（`Q2n`、`SAM`、`ERGAS`�
 | 数据 | 内容 | 体积 | 入口 | 状态 |
 |---|---|---|---|---|
 | PanBench | 10 颗卫星 5,898 对；WV2 578、WV3 567、WV4 500 对；MS 256×256 **4 波段**（RGB+NIR），PAN 1024×1024 | WV 子集约 4 GB，全集约 15 GB（估算） | arXiv 2311.12083（Remote Sensing 2024, 16(16), 2899）；代码与数据链接在论文中 | ⚠️ 下载链接待核对 |
-| PanCollection QB / GF2 | 4 波段 | 5.2 / 6 GB | 同 §1.1 | ✅ |
 | PAirMax Airbus 子集 | Pléiades / SPOT-7，4 波段 | 154 MB | 同 §2.1 E | ✅ |
 
-用途：8 波段模型需改输入层或做波段自适应；也可用 WV3 的 RGB+NIR1 子集做 4 波段联合训练。
+用途：与已有的 QB / GF2 同属 4 波段，可并入现有 4 波段训练流程；对 8 波段 WV3 模型则需改输入层或做波段自适应。PanBench 的 WV2 / WV3 / WV4 子集虽是 WorldView 影像，但只保留了 RGB+NIR，对 8 波段任务价值有限。
 
 ### 2.3 不可用于训练（仅锐化 RGB）
 
