@@ -9,23 +9,13 @@
 
 ## 1. 现状与目标
 
-### 1.1 当前训练数据：PanCollection
+### 1.1 已有数据（不需核对）
 
-| 项 | WV3 | WV2 |
-|---|---|---|
-| 传感器 | WorldView-3，PAN 0.31 m，MS 8 波段 1.24 m | WorldView-2，PAN 0.46 m，MS 8 波段 1.84 m |
-| 波段顺序 | Coastal, Blue, Green, Yellow, Red, Red Edge, NIR1, NIR2 | 同左 |
-| 比例 | 4 | 4 |
-| 位深 / 归一化 | 11 bit，除以 2047 | 同左 |
-| 训练集 | 约 1 万组（各文献报 9,714–10,794），`train_wv3.h5` 约 5.6 GB | 仅用于跨传感器测试，`test_wv2_*.h5` 约 168 MB |
-| 验证集 | 约 1,080 组，`valid_wv3.h5` 约 0.6 GB | — |
-| 测试集 | 20 组降分辨率（PAN 256×256）+ 20 组全分辨率（PAN 512×512） | 20 + 20 |
-| 来源 | 主页 https://liangjiandeng.github.io/PanCollection.html ；代码 https://github.com/liangjiandeng/PanCollection ；镜像 https://huggingface.co/datasets/elsting/PanCollection | 同左 |
-| 许可 | GPL-2.0 | 同左 |
+已在用 PanCollection WV3（训练约 1 万组、验证约 1,080 组、测试 20+20 景）与 WV2（测试 20+20 景），8 波段，比例 4，11 bit，归一化除以 2047，波段顺序 Coastal, Blue, Green, Yellow, Red, Red Edge, NIR1, NIR2。本文档只讨论**在此基础上新增**的数据。
 
 ### 1.2 目标格式（新数据须转成此格式）
 
-HDF5，键名与维度（N, C, H, W）：
+新数据须与现有 `train_wv3.h5` 完全同构。下表是常见约定，**以手头文件为准**（`h5py` 打开看 `keys()`、`shape`、`dtype`、数值范围）：
 
 | 键 | 含义 | 形状（WV3 训练块） | 生成方式 |
 |---|---|---|---|
@@ -35,8 +25,6 @@ HDF5，键名与维度（N, C, H, W）：
 | `pan` | 降分辨率 PAN | N × 1 × 256 × 256 | 原始 PAN（1024×1024）经 MTF 模糊 + 4 倍抽取 |
 
 全分辨率测试集（`test_*_OrigScale_*.h5`）不含 `gt`，`ms` 为原始 MS，`pan` 为原始 PAN。
-**待核对**：键名与维度顺序请以实际 `train_wv3.h5` 为准（`h5py` 打开查看）。
-
 MTF 奈奎斯特增益（Vivone 等工具箱默认值，**待核对**）：
 
 | 传感器 | MS 各波段 | PAN |
@@ -139,9 +127,11 @@ xView（WV-3 RGB，20.7 GB）、xBD / xView2（Maxar RGB，10–30 GB）、LEVIR
 
 | 组合 | 内容 | 下载量 |
 |---|---|---|
-| 最小扩充 | PanCollection WV3 + PAirMax + SpaceNet 2 | 约 40 GB |
-| 中等 | 再加 Maxar Open Data 5–10 个事件 + MVS3DM | 约 150 GB |
+| 最小扩充 | PAirMax + SpaceNet 2 | 约 31 GB |
+| 中等 | 再加 Maxar Open Data 5–10 个事件 + MVS3DM | 约 140 GB |
 | 全量 | 上表全部（含 SN4、US3D） | 约 1.2 TB |
+
+以上均为**新增下载量**，不含已有的 PanCollection。
 
 裁成 64×64 / 256×256 训练块并写成 h5 后，有效数据通常只占下载量的 20%–40%。
 
@@ -153,18 +143,17 @@ xView（WV-3 RGB，20.7 GB）、xBD / xView2（Maxar RGB，10–30 GB）、LEVIR
 
 | # | 待核对项 | 方法 | 通过标准 |
 |---|---|---|---|
-| 1 | PanCollection WV3 **测试景与训练景的地理位置**（城市） | 读 PanCollection 主页 / 论文（Deng et al., GRSM 2022）附录；或打开 `test_wv3_OrigScale_multiExm1.h5` 看影像 | 得到城市列表，用于排除新数据中的重叠区域 |
-| 2 | `train_wv3.h5` 的**键名、维度顺序、数值范围** | `h5py` 打开，打印 `keys()`、`shape`、`dtype`、`min/max` | 与 §1.2 表一致，否则以实际为准更新 §1.2 |
-| 3 | Maxar ARD `ms_analytic` 的**波段数、顺序、位深、缩放** | 用 leafmap / rasterio 打开任一 WV-3 事件瓦片，读 `count`、`dtype`、STAC `eo:bands` | WV-2/3 瓦片为 8 波段且顺序与 §1.1 一致；记录反射率缩放系数 |
-| 4 | Maxar Open Data **许可**现行文本 | 读 https://maxar.com/open-data 与 AWS 登记页 | 确认 CC BY-NC 4.0 及是否允许派生数据再分发 |
-| 5 | SpaceNet 2/3/5 的**瓦片尺寸、位深、MS 波段数**、S3 路径 | 读 https://spacenet.ai/datasets/ 各期页面；`aws s3 ls s3://spacenet-dataset/` | 确认 PAN 0.3 m + MUL 8 波段 11 bit；记录每期体积 |
-| 6 | SpaceNet 4 Atlanta 是否提供**原始 PAN + 8 波段 MS**（非仅锐化） | 同上 | 是则纳入，否则移至 §2.3 |
-| 7 | MVS3DM 的 S3 路径、产品级别、体积、许可 | 读 SpaceNet 页面与 AWS 列表 | 得到可下载路径与实际体积 |
-| 8 | US3D / DFC2019 各 Track 是否含**原始 PAN** | 登录 IEEE DataPort 看文件清单 / README | 有则纳入 |
-| 9 | PAirMax Maxar 9 对的**城市**与 PanCollection 测试景是否重叠 | 读 PAirMax 论文（Vivone et al., JSTARS 2021）表 1 | 不重叠方可用于训练 |
-| 10 | PanBench 下载链接与 WV 子集实际体积 | 读 arXiv 2311.12083 代码链接 | 得到链接 |
-| 11 | WV3 / WV2 的 MTF 增益值 | 读 DLPan-Toolbox 或 Vivone 工具箱 `MTF.m` | 与 §1.2 一致 |
-| 12 | ESA TPM 对 Dragon 计划（中国）用户的申请资格与配额 | 读 EUSI Terms of Applicability | 明确是否可申请 |
+| 1 | PanCollection WV3 / WV2 **测试景所在城市**（用于排除新数据的地理重叠） | 由使用者提供；或读 Deng et al., GRSM 2022 附录 | 得到城市列表 |
+| 2 | Maxar ARD `ms_analytic` 的**波段数、顺序、位深、缩放** | 用 leafmap / rasterio 打开任一 WV-3 事件瓦片，读 `count`、`dtype`、STAC `eo:bands` | WV-2/3 瓦片为 8 波段且顺序与 §1.1 一致；记录反射率缩放系数 |
+| 3 | Maxar Open Data **许可**现行文本 | 读 https://maxar.com/open-data 与 AWS 登记页 | 确认 CC BY-NC 4.0 及是否允许派生数据再分发 |
+| 4 | SpaceNet 2/3/5 的**瓦片尺寸、位深、MS 波段数**、S3 路径 | 读 https://spacenet.ai/datasets/ 各期页面；`aws s3 ls s3://spacenet-dataset/` | 确认 PAN 0.3 m + MUL 8 波段 11 bit；记录每期体积 |
+| 5 | SpaceNet 4 Atlanta 是否提供**原始 PAN + 8 波段 MS**（非仅锐化） | 同上 | 是则纳入，否则移至 §2.3 |
+| 6 | MVS3DM 的 S3 路径、产品级别、体积、许可 | 读 SpaceNet 页面与 AWS 列表 | 得到可下载路径与实际体积 |
+| 7 | US3D / DFC2019 各 Track 是否含**原始 PAN** | 登录 IEEE DataPort 看文件清单 / README | 有则纳入 |
+| 8 | PAirMax Maxar 9 对的**城市**与 PanCollection 测试景是否重叠 | 读 PAirMax 论文（Vivone et al., JSTARS 2021）表 1 | 不重叠方可用于训练 |
+| 9 | PanBench 下载链接与 WV 子集实际体积 | 读 arXiv 2311.12083 代码链接 | 得到链接 |
+| 10 | WV3 / WV2 的 MTF 增益值 | 读 DLPan-Toolbox 或 Vivone 工具箱 `MTF.m` | 与 §1.2 一致 |
+| 11 | ESA TPM 对 Dragon 计划（中国）用户的申请资格与配额 | 读 EUSI Terms of Applicability | 明确是否可申请 |
 
 ---
 
