@@ -13,6 +13,8 @@
 
 已在用 PanCollection WV3（训练约 1 万组、验证约 1,080 组、测试 20+20 景）与 WV2（测试 20+20 景），8 波段，比例 4，11 bit，归一化除以 2047，波段顺序 Coastal, Blue, Green, Yellow, Red, Red Edge, NIR1, NIR2。本文档只讨论**在此基础上新增**的数据。
 
+**PanCollection WV3 测试景位置（已知）**：来自里约热内卢（Rio de Janeiro）与的黎波里（Tripoli）两座城市。全分辨率（FR）测试集全部在的黎波里；降分辨率（RR）测试集两城都有。因此**新增训练数据须排除这两座城市及其周边**，含 WV-2 影像（避免跨传感器评估时泄漏）。
+
 ### 1.2 目标格式（新数据须转成此格式）
 
 新数据须与现有 `train_wv3.h5` 完全同构。下表是常见约定，**以手头文件为准**（`h5py` 打开看 `keys()`、`shape`、`dtype`、数值范围）：
@@ -37,7 +39,7 @@ Wald 协议生成（`MTF`、`interp23tap`）与评估（`Q2n`、`SAM`、`ERGAS`�
 ### 1.3 扩充原则
 
 1. 只收**同时含原始 PAN 与 8 波段 MS** 的 WV-2 / WV-3 数据；已锐化的 RGB 产品（xView、xBD、Google Earth 类）不可用。
-2. 与 PanCollection 测试景**地理不重叠**（PanCollection 测试景来自 Maxar 样例影像，具体城市待核对，见 §3）。
+2. 与 PanCollection 测试景**地理不重叠**：排除里约热内卢与的黎波里（见 §1.1）。
 3. 辐射量级统一到 11 bit DN 或统一归一化；SpaceNet 与 Maxar ARD 部分产品为大气校正后的反射率，需单独处理。
 4. 许可允许用于科研训练；派生数据是否可再分发按各自许可。
 
@@ -62,13 +64,13 @@ Wald 协议生成（`MTF`、`interp23tap`）与评估（`Q2n`、`SAM`、`ERGAS`�
 | 许可 | CC BY-NC 4.0（AWS 登记页、Maxar 博客）；Maxar 概览页写法不同 | ⚠️ 核对现行条款 |
 | 入口 | https://registry.opendata.aws/maxar-open-data/ ；https://maxar.com/open-data ；Python 工具 https://github.com/opengeos/maxar-open-data （leafmap 可按事件检索与下载） | ✅ |
 | 优点 | 免费、地理多样、WV-2/3 都有、含掩膜 | |
-| 风险 | 灾后影像含烟雾 / 云 / 损毁区，需用掩膜与 NDVI 等过滤；反射率产品与 DN 分布不同 | |
+| 风险 | 灾后影像含烟雾 / 云 / 损毁区，需用掩膜与 NDVI 等过滤；反射率产品与 DN 分布不同；事件若覆盖里约或的黎波里（如 2024 年利比亚相关事件）须跳过 | |
 
 #### B. SpaceNet 1–5（WV-2 / WV-3）
 
 | 期 | 城市 | 传感器与产品 | 体积（估算） | 状态 |
 |---|---|---|---|---|
-| SN1 | Rio de Janeiro | WV-2，PAN 0.5 m + 8 波段 MS（公告称 1 m，原生 1.84 m） | 约 3 GB | ⚠️ MS 分辨率有两种说法 |
+| SN1 | Rio de Janeiro | WV-2，PAN 0.5 m + 8 波段 MS | 约 3 GB | ❌ **排除**：与 PanCollection WV3 RR 测试景同城（里约） |
 | SN2 | Las Vegas、Paris、Shanghai、Khartoum | WV-3，PAN 0.3 m + MUL 8 波段 1.2 m + MUL-PanSharpen；常引用瓦片 PAN 650×650 / MUL 163×163 | 约 30 GB | ⚠️ 瓦片尺寸与 11 bit 待核对 |
 | SN3 | 同 SN2 四城（道路） | WV-3，PAN + MUL，瓦片 1300×1300 | 约 50 GB | ⚠️ 与 SN2 影像部分重叠 |
 | SN4 | Atlanta | WV-2，27 个离轴角（7°–54°），PAN + 8 波段 MS | 约 180 GB | ⚠️ |
@@ -78,6 +80,7 @@ Wald 协议生成（`MTF`、`interp23tap`）与评估（`Q2n`、`SAM`、`ERGAS`�
 - 入口：https://spacenet.ai/datasets/ ；AWS `s3://spacenet-dataset/`（Registry of Open Data https://registry.opendata.aws/spacenet/ ，需 AWS 账号 requester-pays 或免费层）。
 - 许可：CC BY-SA 4.0 ✅。
 - 风险：SN2/SN3 瓦片间无重叠但按 AOI 密铺，裁块时按城市划分训练 / 验证；PAN 与 MUL 为同一景的切片，配准可信。
+- SN1（里约）因与测试景同城而排除；SN2–5 的城市（Las Vegas、Paris、Shanghai、Khartoum、Atlanta、Moscow、Mumbai、San Juan）均不与测试景重叠。
 
 #### C. IARPA MVS3DM（WV-3，阿根廷 San Fernando）
 
@@ -99,7 +102,7 @@ Wald 协议生成（`MTF`、`interp23tap`）与评估（`Q2n`、`SAM`、`ERGAS`�
 - 入口：Maxar https://resources.maxar.com/product-samples/pansharpening-benchmark-dataset （接受评估许可）；Airbus https://zenodo.org/records/7706102 （加密，需向 Airbus 申请密码）。✅
 - 体积：Maxar 386 MB + Airbus 154 MB。✅
 - 许可：Maxar Evaluation License / Airbus License，**禁止再分发**；可用于训练但派生 h5 不能公开。⚠️ 核对条款
-- 注意：主要用途是评估；若用于训练，必须确认与 PanCollection WV3 测试景不是同一 Maxar 样例景。
+- 注意：主要用途是评估；若用于训练，必须确认 9 对 Maxar 场景中没有里约或的黎波里（PanCollection WV3 测试景同样来自 Maxar 样例，可能是同一批影像）。
 
 #### F. 整景来源（需自行建数据集）
 
@@ -143,14 +146,14 @@ xView（WV-3 RGB，20.7 GB）、xBD / xView2（Maxar RGB，10–30 GB）、LEVIR
 
 | # | 待核对项 | 方法 | 通过标准 |
 |---|---|---|---|
-| 1 | PanCollection WV3 / WV2 **测试景所在城市**（用于排除新数据的地理重叠） | 由使用者提供；或读 Deng et al., GRSM 2022 附录 | 得到城市列表 |
+| 1 | ~~PanCollection WV3 测试景所在城市~~ **已提供**：里约热内卢 + 的黎波里（FR 全在的黎波里，RR 两城都有） | — | 新数据排除这两座城市；WV2 测试景城市若已知也一并排除 |
 | 2 | Maxar ARD `ms_analytic` 的**波段数、顺序、位深、缩放** | 用 leafmap / rasterio 打开任一 WV-3 事件瓦片，读 `count`、`dtype`、STAC `eo:bands` | WV-2/3 瓦片为 8 波段且顺序与 §1.1 一致；记录反射率缩放系数 |
 | 3 | Maxar Open Data **许可**现行文本 | 读 https://maxar.com/open-data 与 AWS 登记页 | 确认 CC BY-NC 4.0 及是否允许派生数据再分发 |
 | 4 | SpaceNet 2/3/5 的**瓦片尺寸、位深、MS 波段数**、S3 路径 | 读 https://spacenet.ai/datasets/ 各期页面；`aws s3 ls s3://spacenet-dataset/` | 确认 PAN 0.3 m + MUL 8 波段 11 bit；记录每期体积 |
 | 5 | SpaceNet 4 Atlanta 是否提供**原始 PAN + 8 波段 MS**（非仅锐化） | 同上 | 是则纳入，否则移至 §2.3 |
 | 6 | MVS3DM 的 S3 路径、产品级别、体积、许可 | 读 SpaceNet 页面与 AWS 列表 | 得到可下载路径与实际体积 |
 | 7 | US3D / DFC2019 各 Track 是否含**原始 PAN** | 登录 IEEE DataPort 看文件清单 / README | 有则纳入 |
-| 8 | PAirMax Maxar 9 对的**城市**与 PanCollection 测试景是否重叠 | 读 PAirMax 论文（Vivone et al., JSTARS 2021）表 1 | 不重叠方可用于训练 |
+| 8 | PAirMax Maxar 9 对的**城市**中是否含里约或的黎波里 | 读 PAirMax 论文（Vivone et al., JSTARS 2021）表 1 | 不含方可用于训练 |
 | 9 | PanBench 下载链接与 WV 子集实际体积 | 读 arXiv 2311.12083 代码链接 | 得到链接 |
 | 10 | ESA TPM 对 Dragon 计划（中国）用户的申请资格与配额 | 读 EUSI Terms of Applicability | 明确是否可申请 |
 
@@ -160,6 +163,7 @@ xView（WV-3 RGB，20.7 GB）、xBD / xView2（Maxar RGB，10–30 GB）、LEVIR
 
 ### 4.1 下载与筛选
 
+0. **地理排除**：所有来源先按经纬度剔除里约热内卢（约 22.9°S, 43.2°W）与的黎波里（约 32.9°N, 13.2°E）各 50 km 范围内的影像。
 1. **Maxar Open Data**：用 `leafmap.maxar_search()` 按事件列出瓦片，筛选 `platform` 为 WV02 / WV03、`off_nadir` < 25°、云量 < 10%；下载 `pan_analytic`、`ms_analytic` 与掩膜。优先取**灾前**影像，灾后影像用掩膜去除损毁区。
 2. **SpaceNet 2/3/5**：按城市下载 `PAN/` 与 `MUL/` 目录（不下载 `MUL-PanSharpen/` 与 `RGB-PanSharpen/`）。
 3. **MVS3DM / CORE3D**：下载 PAN 与 MS NITF，用 GDAL 读 RPC 元数据，按同一景裁剪。
