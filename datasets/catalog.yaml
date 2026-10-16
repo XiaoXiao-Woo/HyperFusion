@@ -1,0 +1,531 @@
+# HyperFusion 遥感数据集清单（机器可读）
+# 字段说明：
+#   id        : 唯一标识，供 tools/download_datasets.py --name 使用
+#   category  : hsi_msi | real_pairs | pansharpening | multimodal | spatiotemporal | sar_optical | downstream
+#   access    : direct（可直链下载）| registration（需注册 / 申请）| cloud（网盘 / 云盘）| github
+#   files     : 直链文件列表，仅 access=direct 的条目填写
+# 人类可读说明见 docs/datasets.md。整理日期 2026-10-16。
+
+version: 1
+updated: "2026-10-16"
+
+datasets:
+  # ---------------------------------------------------------------- 1.1 近景高光谱库
+  - id: cave
+    name: CAVE Multispectral Image Database
+    category: hsi_msi
+    sensor: Cooled CCD + 可调滤光片（Columbia University）
+    scenes: 32
+    size: [512, 512]
+    bands: 31
+    spectral_range_nm: [400, 700]
+    homepage: https://www.cs.columbia.edu/CAVE/databases/multispectral/
+    access: direct
+    license: 研究用途免费
+    citation: Yasuma et al., Generalized Assorted Pixel Camera, IEEE TIP 2010
+    files:
+      - url: https://www.cs.columbia.edu/CAVE/databases/multispectral/zip/complete_ms_data.zip
+        path: CAVE/complete_ms_data.zip
+
+  - id: harvard
+    name: Harvard Real-World Hyperspectral Images Database
+    category: hsi_msi
+    sensor: Nuance FX LCTF（Harvard）
+    scenes: 77
+    size: [1392, 1040]
+    bands: 31
+    spectral_range_nm: [420, 720]
+    homepage: https://vision.seas.harvard.edu/hyperspec/
+    access: direct
+    license: 非商业研究，须链接项目主页并引用
+    citation: Chakrabarti & Zickler, Statistics of Real-World Hyperspectral Images, CVPR 2011
+    files:
+      - url: https://vision.seas.harvard.edu/hyperspec/d2x5g3/CZ_hsdb.tgz
+        path: Harvard/CZ_hsdb.tgz
+      - url: https://vision.seas.harvard.edu/hyperspec/d2x5g3/CZ_hsdbi.tgz
+        path: Harvard/CZ_hsdbi.tgz
+
+  - id: icvl
+    name: ICVL Hyperspectral Database
+    category: hsi_msi
+    sensor: Specim PS Kappa DX4
+    scenes: 201
+    size: [1392, 1300]
+    bands: 31
+    spectral_range_nm: [400, 700]
+    homepage: https://icvl.cs.bgu.ac.il/hyperspectral/
+    mirror: https://huggingface.co/datasets/danaroth/icvl
+    access: cloud
+    license: 研究用途
+    citation: Arad & Ben-Shahar, Sparse Recovery of Hyperspectral Signal from Natural RGB Images, ECCV 2016
+
+  - id: arad_1k
+    name: ARAD_1K (NTIRE 2022 Spectral Recovery)
+    category: hsi_msi
+    scenes: 1000
+    size: [482, 512]
+    bands: 31
+    spectral_range_nm: [400, 700]
+    homepage: https://codalab.lisn.upsaclay.fr/competitions/721
+    mirror: https://github.com/caiyuanhao1998/MST-plus-plus
+    access: cloud
+    license: 研究用途
+    citation: Arad et al., NTIRE 2022 Spectral Recovery Challenge and Data Set, CVPRW 2022
+
+  # ---------------------------------------------------------------- 1.2 机载 / 星载高光谱场景
+  - id: pavia_u
+    name: Pavia University
+    category: hsi_msi
+    sensor: ROSIS-03
+    size: [610, 340]
+    bands: 103
+    spectral_range_nm: [430, 860]
+    gsd_m: 1.3
+    classes: 9
+    homepage: https://www.ehu.eus/ccwintco/index.php/Hyperspectral_Remote_Sensing_Scenes
+    access: direct
+    license: 研究用途（GIC-UPV/EHU）
+    files:
+      - url: https://www.ehu.eus/ccwintco/uploads/e/ee/PaviaU.mat
+        path: PaviaU/PaviaU.mat
+      - url: https://www.ehu.eus/ccwintco/uploads/5/50/PaviaU_gt.mat
+        path: PaviaU/PaviaU_gt.mat
+
+  - id: pavia_c
+    name: Pavia Centre
+    category: hsi_msi
+    sensor: ROSIS-03
+    size: [1096, 715]
+    bands: 102
+    spectral_range_nm: [430, 860]
+    gsd_m: 1.3
+    classes: 9
+    homepage: https://www.ehu.eus/ccwintco/index.php/Hyperspectral_Remote_Sensing_Scenes
+    access: direct
+    files:
+      - url: https://www.ehu.eus/ccwintco/uploads/e/e3/Pavia.mat
+        path: PaviaC/Pavia.mat
+      - url: https://www.ehu.eus/ccwintco/uploads/5/53/Pavia_gt.mat
+        path: PaviaC/Pavia_gt.mat
+
+  - id: indian_pines
+    name: Indian Pines
+    category: hsi_msi
+    sensor: AVIRIS
+    size: [145, 145]
+    bands: 200
+    spectral_range_nm: [400, 2500]
+    gsd_m: 20
+    classes: 16
+    homepage: https://www.ehu.eus/ccwintco/index.php/Hyperspectral_Remote_Sensing_Scenes
+    access: direct
+    files:
+      - url: https://www.ehu.eus/ccwintco/uploads/6/67/Indian_pines_corrected.mat
+        path: IndianPines/Indian_pines_corrected.mat
+      - url: https://www.ehu.eus/ccwintco/uploads/c/c4/Indian_pines_gt.mat
+        path: IndianPines/Indian_pines_gt.mat
+
+  - id: salinas
+    name: Salinas
+    category: hsi_msi
+    sensor: AVIRIS
+    size: [512, 217]
+    bands: 204
+    spectral_range_nm: [400, 2500]
+    gsd_m: 3.7
+    classes: 16
+    homepage: https://www.ehu.eus/ccwintco/index.php/Hyperspectral_Remote_Sensing_Scenes
+    access: direct
+    files:
+      - url: https://www.ehu.eus/ccwintco/uploads/1/1a/Salinas_corrected.mat
+        path: Salinas/Salinas_corrected.mat
+      - url: https://www.ehu.eus/ccwintco/uploads/f/fa/Salinas_gt.mat
+        path: Salinas/Salinas_gt.mat
+
+  - id: ksc
+    name: Kennedy Space Center
+    category: hsi_msi
+    sensor: AVIRIS
+    size: [512, 614]
+    bands: 176
+    gsd_m: 18
+    classes: 13
+    homepage: https://www.ehu.eus/ccwintco/index.php/Hyperspectral_Remote_Sensing_Scenes
+    access: direct
+    files:
+      - url: https://www.ehu.eus/ccwintco/uploads/2/26/KSC.mat
+        path: KSC/KSC.mat
+      - url: https://www.ehu.eus/ccwintco/uploads/a/a6/KSC_gt.mat
+        path: KSC/KSC_gt.mat
+
+  - id: botswana
+    name: Botswana
+    category: hsi_msi
+    sensor: EO-1 Hyperion
+    size: [1476, 256]
+    bands: 145
+    gsd_m: 30
+    classes: 14
+    homepage: https://www.ehu.eus/ccwintco/index.php/Hyperspectral_Remote_Sensing_Scenes
+    access: direct
+    files:
+      - url: https://www.ehu.eus/ccwintco/uploads/7/72/Botswana.mat
+        path: Botswana/Botswana.mat
+      - url: https://www.ehu.eus/ccwintco/uploads/5/58/Botswana_gt.mat
+        path: Botswana/Botswana_gt.mat
+
+  - id: wdc_mall
+    name: Washington DC Mall
+    category: hsi_msi
+    sensor: HYDICE
+    size: [1280, 307]
+    bands: 191
+    spectral_range_nm: [400, 2400]
+    gsd_m: 2.8
+    homepage: https://engineering.purdue.edu/~biehl/MultiSpec/hyperspectral.html
+    access: cloud
+    license: 研究用途（Purdue MultiSpec）
+
+  - id: chikusei
+    name: Chikusei
+    category: hsi_msi
+    sensor: Headwall Hyperspec-VNIR-C（机载）
+    size: [2517, 2335]
+    bands: 128
+    spectral_range_nm: [363, 1018]
+    gsd_m: 2.5
+    classes: 19
+    homepage: https://naotoyokoya.com/Download.html
+    access: cloud
+    license: Creative Commons，须致谢 Space Application Laboratory, UTokyo
+    citation: Yokoya & Iwasaki, Airborne hyperspectral data over Chikusei, SAL-2016-05-27, 2016
+
+  - id: houston2013
+    name: Houston 2013 (IEEE GRSS DFC 2013)
+    category: multimodal
+    sensor: ITRES CASI-1500 + LiDAR
+    size: [349, 1905]
+    bands: 144
+    spectral_range_nm: [380, 1050]
+    gsd_m: 2.5
+    classes: 15
+    homepage: https://hyperspectral.ee.uh.edu/?page_id=459
+    mirror: https://github.com/danfenghong/ISPRS_S2FL
+    access: registration
+    license: 须邮件申请并致谢 IEEE GRSS 与 UH
+
+  - id: houston2018
+    name: Houston 2018 (IEEE GRSS DFC 2018)
+    category: multimodal
+    sensor: ITRES CASI-1500 + Optech Titan 多光谱 LiDAR + RGB
+    size: [601, 2384]
+    bands: 48
+    spectral_range_nm: [380, 1050]
+    gsd_m: 1
+    classes: 20
+    homepage: https://ieee-dataport.org/open-access/2018-ieee-grss-data-fusion-challenge-fusion-multispectral-lidar-and-hyperspectral-data
+    doi: 10.21227/jnh9-nz89
+    access: registration
+
+  - id: whu_hi
+    name: WHU-Hi (LongKou / HanChuan / HongHu)
+    category: hsi_msi
+    sensor: Headwall Nano-Hyperspec（无人机）
+    scenes: 3
+    bands: 270
+    spectral_range_nm: [400, 1000]
+    gsd_m: [0.463, 0.109, 0.043]
+    homepage: https://rsidea.whu.edu.cn/resource_WHUHi_sharing.htm
+    access: cloud
+    citation: Zhong et al., Remote Sensing of Environment 2020
+
+  - id: xiongan
+    name: Xiong'an (马蹄湾村) 航空高光谱
+    category: hsi_msi
+    sensor: 机载多模态成像光谱仪（上海技物所）
+    size: [3750, 1580]
+    bands: 250
+    spectral_range_nm: [400, 1000]
+    gsd_m: 0.5
+    classes: 19
+    homepage: https://geodoi.ac.cn/WebEn/doi.aspx?Id=1687
+    doi: 10.3974/geodb.2021.01.02.V1
+    access: registration
+    citation: 岑奕等, 雄安新区马蹄湾村航空高光谱遥感影像分类数据集, 遥感学报 2020
+
+  # ---------------------------------------------------------------- 1.3 真实卫星配对
+  - id: whu_mhf
+    name: WHU-MHF
+    category: real_pairs
+    sensor: ZY1-02D AHSI（30 m）+ VNIC MSI（10 m）
+    pairs: 6
+    homepage: https://rsidea.whu.edu.cn/WHU-MHF.htm
+    access: cloud
+
+  - id: zy1_02d_cssnet
+    name: ZY1-02D Real HSI/MSI/PAN (CSSNet)
+    category: real_pairs
+    sensor: ZY1-02D（HSI 30 m 76 波段，MSI 10 m 8 波段，PAN 2.5 m）
+    homepage: https://github.com/rs-lsl/CSSNet
+    mirrors:
+      - https://aistudio.baidu.com/datasetdetail/281612
+      - https://www.kaggle.com/datasets/shuangliangli123/real-hsimsipan-image-dataset
+    access: cloud
+    citation: Li et al., arXiv 2407.02387
+
+  - id: prisma_hp
+    name: PRISMA Hyperspectral Pansharpening (WHISPERS 2022 / toolbox)
+    category: real_pairs
+    sensor: ASI PRISMA（HSI 30 m 239 波段，PAN 5 m）
+    homepage: https://github.com/matciotola/hyperspectral_pansharpening_toolbox
+    data_portal: https://prisma.asi.it
+    access: registration
+    license: ASI 数据政策，仅限研究，禁止转发
+    citation: Ciotola et al., Hyperspectral Pansharpening - Critical Review, Tools and Future Perspectives, 2024
+
+  - id: c2seg_ab
+    name: C2Seg-AB / Berlin–Augsburg EnMAP-S2-S1
+    category: real_pairs
+    sensor: EnMAP 仿真 HSI + Sentinel-2 + Sentinel-1
+    homepage: https://mediatum.ub.tum.de/1657312
+    access: registration
+    license: CC BY-SA 4.0
+
+  - id: enmap
+    name: EnMAP
+    category: real_pairs
+    sensor: EnMAP（224 波段，30 m）
+    homepage: https://www.enmap.org/data_access/
+    access: registration
+    license: 免费开放（需注册）
+
+  - id: hyperion_ali
+    name: EO-1 Hyperion + ALI
+    category: real_pairs
+    sensor: Hyperion（242 波段 30 m）+ ALI（PAN 10 m，MS 30 m）
+    homepage: https://earthexplorer.usgs.gov
+    access: registration
+    license: 公共领域
+
+  - id: gf5_ahsi
+    name: GF-5 / GF-5B AHSI
+    category: real_pairs
+    sensor: AHSI（330 波段，30 m）
+    homepage: https://data.cresda.cn
+    access: registration
+
+  - id: aviris
+    name: AVIRIS / AVIRIS-NG Data Portal
+    category: real_pairs
+    sensor: AVIRIS（224 波段）/ AVIRIS-NG（425 波段）
+    homepage: https://aviris.jpl.nasa.gov/dataportal/
+    access: registration
+    license: 免费
+
+  # ---------------------------------------------------------------- 2 全色锐化
+  - id: pancollection
+    name: PanCollection (WV3 / QB / GF2 / WV2)
+    category: pansharpening
+    sensor: WorldView-3（8 波段）、QuickBird（4）、GaoFen-2（4）、WorldView-2（8）
+    homepage: https://liangjiandeng.github.io/PanCollection.html
+    repo: https://github.com/liangjiandeng/PanCollection
+    pypi: https://github.com/XiaoXiao-Woo/PanCollection
+    mirror: https://huggingface.co/datasets/elsting/PanCollection
+    format: h5（MS 64×64 / PAN 256×256 训练块；测试 256 降分辨率 + 512 全分辨率）
+    access: cloud
+    license: GPL-2.0
+    citation: Deng et al., Machine Learning in Pansharpening - A Benchmark, from Shallow to Deep Networks, IEEE GRSM 2022
+
+  - id: pairmax
+    name: PAirMax
+    category: pansharpening
+    sensor: WorldView-2/3、GeoEye-1、Pléiades、SPOT-7
+    pairs: 14
+    homepage: https://resources.maxar.com/product-samples/pansharpening-benchmark-dataset
+    mirrors:
+      - https://zenodo.org/records/7706102
+    access: registration
+    license: Maxar Evaluation License / Airbus License
+    citation: Vivone et al., A Benchmarking Protocol for Pansharpening, IEEE JSTARS 2021
+
+  - id: dlpan_toolbox
+    name: DLPan-Toolbox
+    category: pansharpening
+    homepage: https://github.com/liangjiandeng/DLPan-Toolbox
+    access: github
+    note: 与 PanCollection 配套的方法与评估工具箱
+
+  # ---------------------------------------------------------------- 3 多模态
+  - id: trento
+    name: Trento HSI + LiDAR
+    category: multimodal
+    sensor: AISA Eagle（63 波段）+ LiDAR
+    size: [600, 166]
+    gsd_m: 1
+    classes: 6
+    homepage: https://github.com/tyust-dayu/Trento
+    access: github
+
+  - id: muufl
+    name: MUUFL Gulfport
+    category: multimodal
+    sensor: CASI-1500（64 波段）+ LiDAR
+    size: [325, 220]
+    gsd_m: 1
+    classes: 11
+    homepage: https://github.com/GatorSense/MUUFLGulfport
+    access: github
+
+  - id: berlin_augsburg_s2fl
+    name: Berlin / Augsburg HSI + SAR (S2FL)
+    category: multimodal
+    sensor: EnMAP 仿真 HSI / HySpex + Sentinel-1
+    homepage: https://github.com/danfenghong/ISPRS_S2FL
+    access: github
+    citation: Hong et al., ISPRS J. Photogramm. 2021
+
+  - id: rs_fusion_datasets
+    name: rs-fusion-datasets（统一加载器）
+    category: multimodal
+    homepage: https://github.com/songyz2019/rs-fusion-datasets
+    pypi_package: rs-fusion-datasets
+    access: github
+
+  # ---------------------------------------------------------------- 4 时空融合
+  - id: cia
+    name: CIA (Coleambally Irrigation Area)
+    category: spatiotemporal
+    sensor: Landsat-7 ETM+ / MODIS MOD09GA
+    pairs: 17
+    size: [1720, 2040]
+    period: 2001-10 ~ 2002-05
+    doi: 10.4225/08/5111AC0BF1229
+    homepage: https://data.csiro.au
+    access: registration
+    citation: Emelyanova et al., RSE 2013
+
+  - id: lgc
+    name: LGC (Lower Gwydir Catchment)
+    category: spatiotemporal
+    sensor: Landsat-5 TM / MODIS
+    pairs: 14
+    size: [3200, 2720]
+    period: 2004-04 ~ 2005-04
+    doi: 10.4225/08/5111AD2B7FEE6
+    homepage: https://data.csiro.au
+    access: registration
+
+  - id: ahb_tianjin_daxing
+    name: AHB / Tianjin / Daxing
+    category: spatiotemporal
+    sensor: Landsat / MODIS
+    pairs: 27
+    doi: 10.1007/s11432-019-2785-y
+    access: cloud
+    citation: Li et al., Spatio-temporal fusion for remote sensing data - an overview and new benchmark, Sci China Inf Sci 2020
+
+  - id: wuhan_stf
+    name: Wuhan Dataset (GF / Landsat)
+    category: spatiotemporal
+    pairs: 8
+    homepage: https://github.com/lixinghua5540/Wuhan-dataset
+    access: github
+    citation: Zhang et al., IEEE GRSL 2024
+
+  - id: s2_s3_stf
+    name: Sentinel-2 / Sentinel-3 OLCI STF benchmark
+    category: spatiotemporal
+    homepage: https://zenodo.org/records/7970845
+    mirrors:
+      - https://doi.org/10.5281/zenodo.14860220
+    access: cloud
+
+  # ---------------------------------------------------------------- 5 SAR-光学
+  - id: sen12ms
+    name: SEN12MS
+    category: sar_optical
+    sensor: Sentinel-1 + Sentinel-2 + MODIS LC
+    patches: 180662
+    size: [256, 256]
+    homepage: https://mediatum.ub.tum.de/1474000
+    access: registration
+    license: CC BY 4.0
+
+  - id: sen1_2
+    name: SEN1-2
+    category: sar_optical
+    sensor: Sentinel-1 + Sentinel-2 RGB
+    patches: 282384
+    size: [256, 256]
+    homepage: https://mediatum.ub.tum.de/1436631
+    access: registration
+    license: CC BY 4.0
+
+  - id: sen12ms_cr
+    name: SEN12MS-CR / CR-TS（云去除）
+    category: sar_optical
+    homepage: https://patrickTUM.github.io/cloud_removal/
+    access: registration
+    license: CC BY 4.0
+
+  - id: qxs_saropt
+    name: QXS-SAROPT
+    category: sar_optical
+    sensor: GF-3 SAR（1 m）+ Google Earth 光学
+    pairs: 20000
+    size: [256, 256]
+    homepage: https://github.com/yaoxu008/QXS-SAROPT
+    access: github
+
+  - id: whu_opt_sar
+    name: WHU-OPT-SAR
+    category: sar_optical
+    sensor: GF-1 光学（5 m）+ GF-3 SAR（5 m）
+    pairs: 100
+    size: [5556, 3704]
+    classes: 7
+    homepage: https://github.com/AmberHen/WHU-OPT-SAR
+    access: github
+
+  # ---------------------------------------------------------------- 6 下游任务
+  - id: unmixing_rslab
+    name: Samson / Jasper Ridge / Urban（解混）
+    category: downstream
+    homepage: https://rslab.ut.ac.ir/data
+    access: cloud
+
+  - id: abu
+    name: ABU (Airport-Beach-Urban) 异常检测
+    category: downstream
+    scenes: 13
+    homepage: http://xudongkang.weebly.com/data-sets.html
+    access: cloud
+
+  - id: had100
+    name: HAD100 异常检测
+    category: downstream
+    scenes: 100
+    homepage: https://github.com/zhaoxuli123/HAD100
+    access: github
+
+  - id: hsi_cd_citius
+    name: Hermiston / Bay Area / Santa Barbara（高光谱变化检测）
+    category: downstream
+    homepage: https://citius.usc.es/t/17
+    access: cloud
+    license: CC BY-NC-ND
+
+  - id: levir_cd
+    name: LEVIR-CD
+    category: downstream
+    pairs: 637
+    size: [1024, 1024]
+    gsd_m: 0.5
+    homepage: https://justchenhao.github.io/LEVIR/
+    access: cloud
+
+  - id: whu_cd
+    name: WHU Building Change Detection
+    category: downstream
+    homepage: http://gpcv.whu.edu.cn/data/building_dataset.html
+    access: cloud
