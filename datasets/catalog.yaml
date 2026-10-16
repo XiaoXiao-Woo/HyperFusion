@@ -26,6 +26,9 @@ datasets:
     files:
       - url: https://www.cs.columbia.edu/CAVE/databases/multispectral/zip/complete_ms_data.zip
         path: CAVE/complete_ms_data.zip
+    size_gb: 0.8
+    size_estimated: true
+    size_note: "官方 complete_ms_data.zip 未标体积，估算 0.5–1 GB；IEEE DataPort 镜像 2.51 GB"
 
   - id: harvard
     name: Harvard Real-World Hyperspectral Images Database
@@ -44,6 +47,8 @@ datasets:
         path: Harvard/CZ_hsdb.tgz
       - url: https://vision.seas.harvard.edu/hyperspec/d2x5g3/CZ_hsdbi.tgz
         path: Harvard/CZ_hsdbi.tgz
+    size_gb: 7.5
+    size_note: "CZ_hsdb.tgz 5.3 GB + CZ_hsdbi.tgz 2.2 GB（官方下载页）"
 
   - id: icvl
     name: ICVL Hyperspectral Database
@@ -58,6 +63,9 @@ datasets:
     access: cloud
     license: 研究用途
     citation: Arad & Ben-Shahar, Sparse Recovery of Hyperspectral Signal from Natural RGB Images, ECCV 2016
+    size_gb: 75.0
+    size_estimated: true
+    size_note: "31 波段 .mat 估算 60–90 GB；含原始 ENVI 全集约 335 GB（HF ICVL-BGU/ICVL_HS_2016）"
 
   - id: arad_1k
     name: ARAD_1K (NTIRE 2022 Spectral Recovery)
@@ -71,6 +79,9 @@ datasets:
     access: cloud
     license: 研究用途
     citation: Arad et al., NTIRE 2022 Spectral Recovery Challenge and Data Set, CVPRW 2022
+    size_gb: 25.0
+    size_estimated: true
+    size_note: "估算：950 张 482×512×31 float32 ≈29 GB，压缩后约 20–25 GB"
 
   # ---------------------------------------------------------------- 1.2 机载 / 星载高光谱场景
   - id: pavia_u
@@ -90,6 +101,8 @@ datasets:
         path: PaviaU/PaviaU.mat
       - url: https://www.ehu.eus/ccwintco/uploads/5/50/PaviaU_gt.mat
         path: PaviaU/PaviaU_gt.mat
+    size_gb: 0.033
+    size_note: "PaviaU.mat 33.2 MB（ehu.eus）"
 
   - id: pavia_c
     name: Pavia Centre
@@ -107,6 +120,8 @@ datasets:
         path: PaviaC/Pavia.mat
       - url: https://www.ehu.eus/ccwintco/uploads/5/53/Pavia_gt.mat
         path: PaviaC/Pavia_gt.mat
+    size_gb: 0.124
+    size_note: "Pavia.mat 123.6 MB（ehu.eus）"
 
   - id: indian_pines
     name: Indian Pines
@@ -124,6 +139,8 @@ datasets:
         path: IndianPines/Indian_pines_corrected.mat
       - url: https://www.ehu.eus/ccwintco/uploads/c/c4/Indian_pines_gt.mat
         path: IndianPines/Indian_pines_gt.mat
+    size_gb: 0.006
+    size_note: "Indian_pines_corrected.mat 5.7 MB（ehu.eus）"
 
   - id: salinas
     name: Salinas
@@ -141,6 +158,8 @@ datasets:
         path: Salinas/Salinas_corrected.mat
       - url: https://www.ehu.eus/ccwintco/uploads/f/fa/Salinas_gt.mat
         path: Salinas/Salinas_gt.mat
+    size_gb: 0.025
+    size_note: "Salinas_corrected.mat 25.3 MB（ehu.eus）"
 
   - id: ksc
     name: Kennedy Space Center
@@ -157,6 +176,8 @@ datasets:
         path: KSC/KSC.mat
       - url: https://www.ehu.eus/ccwintco/uploads/a/a6/KSC_gt.mat
         path: KSC/KSC_gt.mat
+    size_gb: 0.057
+    size_note: "KSC.mat 56.8 MB（ehu.eus）"
 
   - id: botswana
     name: Botswana
@@ -173,6 +194,8 @@ datasets:
         path: Botswana/Botswana.mat
       - url: https://www.ehu.eus/ccwintco/uploads/5/58/Botswana_gt.mat
         path: Botswana/Botswana_gt.mat
+    size_gb: 0.079
+    size_note: "Botswana.mat 78.9 MB（ehu.eus）"
 
   - id: wdc_mall
     name: Washington DC Mall
@@ -185,6 +208,8 @@ datasets:
     homepage: https://engineering.purdue.edu/~biehl/MultiSpec/hyperspectral.html
     access: cloud
     license: 研究用途（Purdue MultiSpec）
+    size_gb: 0.145
+    size_note: "dc.tif 145 MB（Purdue MultiSpec 页面）"
 
   - id: chikusei
     name: Chikusei
@@ -199,6 +224,8 @@ datasets:
     access: cloud
     license: Creative Commons，须致谢 Space Application Laboratory, UTokyo
     citation: Yokoya & Iwasaki, Airborne hyperspectral data over Chikusei, SAL-2016-05-27, 2016
+    size_gb: 2.4
+    size_note: "ENVI zip ≈1.0 GB + MATLAB zip ≈1.4 GB（SAL-UTokyo；hyper.ai 镜像列 1.0 + 2.33 GB）"
 
   - id: houston2013
     name: Houston 2013 (IEEE GRSS DFC 2013)
@@ -213,6 +240,9 @@ datasets:
     mirror: https://github.com/danfenghong/ISPRS_S2FL
     access: registration
     license: 须邮件申请并致谢 IEEE GRSS 与 UH
+    size_gb: 0.2
+    size_estimated: true
+    size_note: "估算：349×1905×144 uint16 ≈191 MB + DSM；官网需申请"
 
   - id: houston2018
     name: Houston 2018 (IEEE GRSS DFC 2018)
@@ -226,6 +256,9 @@ datasets:
     homepage: https://ieee-dataport.org/open-access/2018-ieee-grss-data-fusion-challenge-fusion-multispectral-lidar-and-hyperspectral-data
     doi: 10.21227/jnh9-nz89
     access: registration
+    size_gb: 3.0
+    size_estimated: true
+    size_note: "未公布总量；栅格部分 ≈0.7 GB（含 5 cm RGB 410 MB），含多光谱 LiDAR 点云估计数 GB"
 
   - id: whu_hi
     name: WHU-Hi (LongKou / HanChuan / HongHu)
@@ -238,6 +271,8 @@ datasets:
     homepage: https://rsidea.whu.edu.cn/resource_WHUHi_sharing.htm
     access: cloud
     citation: Zhong et al., Remote Sensing of Environment 2020
+    size_gb: 1.0
+    size_note: "三景 .mat 合计约 0.9–1.1 GB（Kaggle 886 MB / HF 镜像 1.14 GB）"
 
   - id: xiongan
     name: Xiong'an (马蹄湾村) 航空高光谱
@@ -252,6 +287,8 @@ datasets:
     doi: 10.3974/geodb.2021.01.02.V1
     access: registration
     citation: 岑奕等, 雄安新区马蹄湾村航空高光谱遥感影像分类数据集, 遥感学报 2020
+    size_gb: 1.75
+    size_note: "geodoi 6 个文件压缩 1.75 GB，解压 2.83 GB"
 
   # ---------------------------------------------------------------- 1.3 真实卫星配对
   - id: whu_mhf
@@ -261,6 +298,9 @@ datasets:
     pairs: 6
     homepage: https://rsidea.whu.edu.cn/WHU-MHF.htm
     access: cloud
+    size_gb: 5.0
+    size_estimated: true
+    size_note: "估算：7 景 HSI(148 波段)+MSI(8 波段) uint16 未压缩"
 
   - id: zy1_02d_cssnet
     name: ZY1-02D Real HSI/MSI/PAN (CSSNet)
@@ -272,6 +312,9 @@ datasets:
       - https://www.kaggle.com/datasets/shuangliangli123/real-hsimsipan-image-dataset
     access: cloud
     citation: Li et al., arXiv 2407.02387
+    size_gb: 2.0
+    size_estimated: true
+    size_note: "估算：HSI 76 波段+MSI 8 波段+PAN 2.5 m，1–3 GB"
 
   - id: prisma_hp
     name: PRISMA Hyperspectral Pansharpening (WHISPERS 2022 / toolbox)
@@ -282,6 +325,10 @@ datasets:
     access: registration
     license: ASI 数据政策，仅限研究，禁止转发
     citation: Ciotola et al., Hyperspectral Pansharpening - Critical Review, Tools and Future Perspectives, 2024
+    size_gb: 0.2
+    size_per_scene_gb: 1.0
+    size_estimated: true
+    size_note: "每景 L2D ≈1 GB（prismaread 文档）；WHISPERS 2022 挑战集 ≈0.2 GB 估算"
 
   - id: c2seg_ab
     name: C2Seg-AB / Berlin–Augsburg EnMAP-S2-S1
@@ -290,6 +337,9 @@ datasets:
     homepage: https://mediatum.ub.tum.de/1657312
     access: registration
     license: CC BY-SA 4.0
+    size_gb: 1.6
+    size_estimated: true
+    size_note: "估算：Berlin+Augsburg 242 波段 int16 未压缩；mediaTUM 页未列体积"
 
   - id: enmap
     name: EnMAP
@@ -298,6 +348,8 @@ datasets:
     homepage: https://www.enmap.org/data_access/
     access: registration
     license: 免费开放（需注册）
+    size_per_scene_gb: 1.2
+    size_note: "每景 L2A ≈1–1.5 GB（EnMAP 产品规范：光谱影像上限 639 MB + 质量层）"
 
   - id: hyperion_ali
     name: EO-1 Hyperion + ALI
@@ -306,6 +358,9 @@ datasets:
     homepage: https://earthexplorer.usgs.gov
     access: registration
     license: 公共领域
+    size_per_scene_gb: 0.5
+    size_estimated: true
+    size_note: "每景 Hyperion L1 ≈0.3–0.5 GB，ALI ≈0.1–0.2 GB"
 
   - id: gf5_ahsi
     name: GF-5 / GF-5B AHSI
@@ -313,6 +368,9 @@ datasets:
     sensor: AHSI（330 波段，30 m）
     homepage: https://data.cresda.cn
     access: registration
+    size_per_scene_gb: 2.6
+    size_estimated: true
+    size_note: "每景估算：2000×2000×330×2B"
 
   - id: aviris
     name: AVIRIS / AVIRIS-NG Data Portal
@@ -321,6 +379,8 @@ datasets:
     homepage: https://aviris.jpl.nasa.gov/dataportal/
     access: registration
     license: 免费
+    size_per_scene_gb: 1.5
+    size_note: "每条航线 AVIRIS-NG ≈1.1 GB zip / 2 GB 解压；Classic ≈1.5–3 GB；Classic L2 全集 25.7 TB"
 
   # ---------------------------------------------------------------- 2 全色锐化
   - id: pancollection
@@ -335,6 +395,8 @@ datasets:
     access: cloud
     license: GPL-2.0
     citation: Deng et al., Machine Learning in Pansharpening - A Benchmark, from Shallow to Deep Networks, IEEE GRSM 2022
+    size_gb: 20.0
+    size_note: "HF 镜像：训练 GF2 6 GB + QB 5.19 GB + WV3 5.57 GB + WV2 168 MB，验证 ≈1.9 GB，测试 ≈1–2 GB"
 
   - id: pairmax
     name: PAirMax
@@ -347,6 +409,8 @@ datasets:
     access: registration
     license: Maxar Evaluation License / Airbus License
     citation: Vivone et al., A Benchmarking Protocol for Pansharpening, IEEE JSTARS 2021
+    size_gb: 0.54
+    size_note: "Maxar 9 对 386 MB + Airbus 5 对 153.9 MB（Zenodo 7706102）"
 
   - id: dlpan_toolbox
     name: DLPan-Toolbox
@@ -354,6 +418,9 @@ datasets:
     homepage: https://github.com/liangjiandeng/DLPan-Toolbox
     access: github
     note: 与 PanCollection 配套的方法与评估工具箱
+    size_gb: 0.03
+    size_estimated: true
+    size_note: "纯代码仓库，无数据"
 
   # ---------------------------------------------------------------- 3 多模态
   - id: trento
@@ -365,6 +432,8 @@ datasets:
     classes: 6
     homepage: https://github.com/tyust-dayu/Trento
     access: github
+    size_gb: 0.012
+    size_note: "Italy_hsi.mat 11.5 MB + LiDAR 0.4 MB（GitHub）"
 
   - id: muufl
     name: MUUFL Gulfport
@@ -375,6 +444,8 @@ datasets:
     classes: 11
     homepage: https://github.com/GatorSense/MUUFLGulfport
     access: github
+    size_gb: 0.093
+    size_note: "四个 .mat 合计约 93 MB（GitHub）"
 
   - id: berlin_augsburg_s2fl
     name: Berlin / Augsburg HSI + SAR (S2FL)
@@ -383,6 +454,8 @@ datasets:
     homepage: https://github.com/danfenghong/ISPRS_S2FL
     access: github
     citation: Hong et al., ISPRS J. Photogramm. 2021
+    size_gb: 0.38
+    size_note: "Berlin + Augsburg 合集 378.72 MB（figshare 28112405）"
 
   - id: rs_fusion_datasets
     name: rs-fusion-datasets（统一加载器）
@@ -390,6 +463,8 @@ datasets:
     homepage: https://github.com/songyz2019/rs-fusion-datasets
     pypi_package: rs-fusion-datasets
     access: github
+    size_gb: 0.0
+    size_note: "加载器，按需拉取上述数据集"
 
   # ---------------------------------------------------------------- 4 时空融合
   - id: cia
@@ -403,6 +478,9 @@ datasets:
     homepage: https://data.csiro.au
     access: registration
     citation: Emelyanova et al., RSE 2013
+    size_gb: 1.4
+    size_estimated: true
+    size_note: "估算：17 对 Landsat+MODIS 6 波段 uint16 未压缩"
 
   - id: lgc
     name: LGC (Lower Gwydir Catchment)
@@ -414,6 +492,9 @@ datasets:
     doi: 10.4225/08/5111AD2B7FEE6
     homepage: https://data.csiro.au
     access: registration
+    size_gb: 2.9
+    size_estimated: true
+    size_note: "估算：14 对，3200×2720"
 
   - id: ahb_tianjin_daxing
     name: AHB / Tianjin / Daxing
@@ -423,6 +504,9 @@ datasets:
     doi: 10.1007/s11432-019-2785-y
     access: cloud
     citation: Li et al., Spatio-temporal fusion for remote sensing data - an overview and new benchmark, Sci China Inf Sci 2020
+    size_gb: 8.9
+    size_estimated: true
+    size_note: "估算：AHB 4.5 + Tianjin 2.7 + Daxing 1.7 GB 未压缩（各 27 对）"
 
   - id: wuhan_stf
     name: Wuhan Dataset (GF / Landsat)
@@ -431,6 +515,9 @@ datasets:
     homepage: https://github.com/lixinghua5540/Wuhan-dataset
     access: github
     citation: Zhang et al., IEEE GRSL 2024
+    size_gb: 1.0
+    size_estimated: true
+    size_note: "估算：8 对 GF/Landsat，仓库内 train/test 目录"
 
   - id: s2_s3_stf
     name: Sentinel-2 / Sentinel-3 OLCI STF benchmark
@@ -439,6 +526,8 @@ datasets:
     mirrors:
       - https://doi.org/10.5281/zenodo.14860220
     access: cloud
+    size_gb: 5.6
+    size_note: "Zenodo 14860220 各站点 zip 合计 5.6 GB"
 
   # ---------------------------------------------------------------- 5 SAR-光学
   - id: sen12ms
@@ -450,6 +539,8 @@ datasets:
     homepage: https://mediatum.ub.tum.de/1474000
     access: registration
     license: CC BY 4.0
+    size_gb: 452.0
+    size_note: "论文 421.3 GiB；mediaTUM 列 510 GB"
 
   - id: sen1_2
     name: SEN1-2
@@ -460,6 +551,8 @@ datasets:
     homepage: https://mediatum.ub.tum.de/1436631
     access: registration
     license: CC BY 4.0
+    size_gb: 43.7
+    size_note: "mediaTUM 1436631：43.7 GB，564,770 文件"
 
   - id: sen12ms_cr
     name: SEN12MS-CR / CR-TS（云去除）
@@ -467,6 +560,8 @@ datasets:
     homepage: https://patrickTUM.github.io/cloud_removal/
     access: registration
     license: CC BY 4.0
+    size_gb: 272.0
+    size_note: "SEN12MS-CR 272 GB（mediaTUM 1554803）；CR-TS 另约 663 GB 下载 / 2 TB 解压"
 
   - id: qxs_saropt
     name: QXS-SAROPT
@@ -476,6 +571,9 @@ datasets:
     size: [256, 256]
     homepage: https://github.com/yaoxu008/QXS-SAROPT
     access: github
+    size_gb: 2.5
+    size_estimated: true
+    size_note: "估算：20,000 对 256×256 PNG ≈2–3 GB（未压缩 5.2 GB）"
 
   - id: whu_opt_sar
     name: WHU-OPT-SAR
@@ -486,6 +584,9 @@ datasets:
     classes: 7
     homepage: https://github.com/AmberHen/WHU-OPT-SAR
     access: github
+    size_gb: 12.0
+    size_estimated: true
+    size_note: "估算：100×5556×3704×6 通道 8 位未压缩"
 
   # ---------------------------------------------------------------- 6 下游任务
   - id: unmixing_rslab
@@ -493,6 +594,8 @@ datasets:
     category: downstream
     homepage: https://rslab.ut.ac.ir/data
     access: cloud
+    size_gb: 0.023
+    size_note: "Samson 3.4 MB + Jasper Ridge 2.8 MB + Urban 16.9 MB"
 
   - id: abu
     name: ABU (Airport-Beach-Urban) 异常检测
@@ -500,6 +603,9 @@ datasets:
     scenes: 13
     homepage: http://xudongkang.weebly.com/data-sets.html
     access: cloud
+    size_gb: 0.043
+    size_estimated: true
+    size_note: "13 个 .mat 各 1.5–8.2 MB，合计约 40–45 MB"
 
   - id: had100
     name: HAD100 异常检测
@@ -507,6 +613,9 @@ datasets:
     scenes: 100
     homepage: https://github.com/zhaoxuli123/HAD100
     access: github
+    size_gb: 1.7
+    size_estimated: true
+    size_note: "估算：AVIRIS-NG 训练集 ≈1.45 GB + 100 幅测试图 0.2–0.5 GB"
 
   - id: hsi_cd_citius
     name: Hermiston / Bay Area / Santa Barbara（高光谱变化检测）
@@ -514,6 +623,9 @@ datasets:
     homepage: https://citius.usc.es/t/17
     access: cloud
     license: CC BY-NC-ND
+    size_gb: 1.0
+    size_estimated: true
+    size_note: "Bay Area ≈196 MB + Hermiston ≈134 MB（DataPort 镜像）+ Santa Barbara 估算 ≈650 MB"
 
   - id: levir_cd
     name: LEVIR-CD
@@ -523,12 +635,16 @@ datasets:
     gsd_m: 0.5
     homepage: https://justchenhao.github.io/LEVIR/
     access: cloud
+    size_gb: 2.46
+    size_note: "zip 2.46 GB（Kaggle 镜像与官方 Google Drive 同源）"
 
   - id: whu_cd
     name: WHU Building Change Detection
     category: downstream
     homepage: http://gpcv.whu.edu.cn/data/building_dataset.html
     access: cloud
+    size_gb: 3.4
+    size_note: "官方页标注 3.4 GB；IEEE DataPort 裁剪版 1.78 GB"
 
   # ---------------------------------------------------------------- 8 城市级 3D 场景
   - id: sensaturban
@@ -808,6 +924,9 @@ datasets:
     homepage: https://github.com/ZhanYang-nwpu/RSVG-pytorch
     access: cloud
     citation: Zhan et al., IEEE TGRS 2023
+    size_gb: 6.0
+    size_estimated: true
+    size_note: "估算：17,402 张 800×800 JPEG，与 RRSIS-D 同源"
 
   - id: opt_rsvg
     name: OPT-RSVG
@@ -816,6 +935,9 @@ datasets:
     descriptions: 48952
     homepage: https://github.com/like413/OPT-RSVG
     access: cloud
+    size_gb: 10.0
+    size_estimated: true
+    size_note: "估算：25,452 张影像，尺寸 152² 至 8935×10569"
 
   - id: vrsbench
     name: VRSBench
@@ -830,6 +952,8 @@ datasets:
     access: cloud
     license: 文本 CC BY 4.0；影像限学术
     citation: Li et al., NeurIPS 2024 Datasets and Benchmarks
+    size_gb: 11.52
+    size_note: "VRSBench.zip 11.52 GB（hyper.ai 镜像）"
 
   - id: rrsis_d
     name: RRSIS-D
@@ -839,6 +963,8 @@ datasets:
     homepage: https://github.com/Lsan2401/RMSIN
     access: cloud
     citation: Liu et al., CVPR 2024
+    size_gb: 6.07
+    size_note: "rrsis.zip 6.07 GB（hyper.ai 镜像）"
 
   - id: refsegrs
     name: RefSegRS
@@ -851,6 +977,8 @@ datasets:
     access: cloud
     license: CC BY 4.0
     citation: Yuan et al., IEEE TGRS 2024
+    size_gb: 2.97
+    size_note: "Hugging Face 下载量 2.97 GB（parquet 1.01 GB）"
 
   # ---------------------------------------------------------------- 8.7 卫星 / 航拍视角 3D 生成
   - id: aerial_earth3d
@@ -903,6 +1031,7 @@ datasets:
     access: registration
     note: 以卫星视角影像为条件生成航拍 3DGS；200 m × 200 m 瓦片
     citation: Qian et al., GS-Voxel, 2026
+    size_note: "训练数据未公开"
 
   # ---------------------------------------------------------------- 7 通用遥感基准
   - id: uc_merced
@@ -1017,6 +1146,7 @@ datasets:
     access: registration
     note: 截至 2026-10-16 未发布
     citation: Zhang et al., CitySTAR, 2026
+    size_note: "未发布；标注文本本身预计 <50 MB，点云取自 SensatUrban / STPLS3D"
 
   - id: city3dqa
     name: 3DCity-LLM-1.2M / City-3DQA
@@ -1026,6 +1156,9 @@ datasets:
     homepage: https://github.com/SYSU-3DSTAILab/3D-City-LLM
     access: github
     citation: 3DCity-LLM, arXiv 2603.23447
+    size_gb: 1.0
+    size_estimated: true
+    size_note: "估算：120 万条 QA 文本约 1 GB；点云另取自 SensatUrban / UrbanBIS"
 
   - id: geoeval3d
     name: GeoEval3D (GeoProg3D)
@@ -1034,6 +1167,9 @@ datasets:
     homepage: https://arxiv.org/abs/2506.23352
     access: github
     citation: Yasuki et al., GeoProg3D, ICCV 2025
+    size_gb: 0.01
+    size_estimated: true
+    size_note: "952 组问答文本，<10 MB；3D 高斯场景需自行重建"
 
   - id: opencity3d
     name: OpenCity3D benchmark
@@ -1041,3 +1177,4 @@ datasets:
     homepage: https://opencity3d.github.io
     access: registration
     citation: Bieri et al., OpenCity3D, WACV 2025
+    size_note: "基准数据未单独发布；依赖航拍网格渲染"
