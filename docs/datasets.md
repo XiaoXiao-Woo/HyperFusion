@@ -99,7 +99,7 @@ ehu.eus 场景的直链（`.mat`）已写入 `datasets/catalog.yaml`，可用脚
 
 | 数据集 | 卫星 | 波段 | 分辨率（PAN / MS） | 规模 | 下载 | 许可 / 备注 |
 |---|---|---|---|---|---|---|
-| **PanCollection** | WorldView-3 | 8 | 0.31 m / 1.24 m | 训练约 1 万块（MS 64×64，PAN 256×256，`.h5`）；测试 20 景降分辨率（256）+ 20 景全分辨率（512） | 主页 https://liangjiandeng.github.io/PanCollection.html ；代码 https://github.com/liangjiandeng/PanCollection ；PyPI `pancollection`（https://github.com/XiaoXiao-Woo/PanCollection）；镜像 https://huggingface.co/datasets/elsting/PanCollection | GPL-2.0；引用 Deng et al., IEEE GRSM 2022 |
+| **PanCollection** | WorldView-3 | 8 | 0.31 m / 1.24 m | 训练约 1 万块（`.h5`，gt 64×64 / ms 16×16 / pan 64×64，由原始 MS 64² 与 PAN 256² 切块经 Wald 协议降 4 倍得到）；测试 20 景降分辨率（gt 256²）+ 20 景全分辨率（PAN 512²） | 主页 https://liangjiandeng.github.io/PanCollection.html ；代码 https://github.com/liangjiandeng/PanCollection ；PyPI `pancollection`（https://github.com/XiaoXiao-Woo/PanCollection）；镜像 https://huggingface.co/datasets/elsting/PanCollection | GPL-2.0；引用 Deng et al., IEEE GRSM 2022 |
 | **PanCollection** | QuickBird | 4 | 0.61 m / 2.44 m | 训练约 1.7–1.9 万块 | 同上 | 同上 |
 | **PanCollection** | GaoFen-2 | 4 | 0.8 m / 3.2 m | 训练约 2 万块 | 同上 | 同上 |
 | **PanCollection** | WorldView-2 | 8 | 0.46 m / 1.84 m | 用于跨传感器泛化测试 | 同上 | 同上 |

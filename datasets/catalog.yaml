@@ -391,7 +391,7 @@ datasets:
     repo: https://github.com/liangjiandeng/PanCollection
     pypi: https://github.com/XiaoXiao-Woo/PanCollection
     mirror: https://huggingface.co/datasets/elsting/PanCollection
-    format: h5（MS 64×64 / PAN 256×256 训练块；测试 256 降分辨率 + 512 全分辨率）
+    format: h5（训练块 gt 64² / ms 16² / lms 64² / pan 64²，由原始 MS 64² 与 PAN 256² 切块按 Wald 降 4 倍；RR 测试 gt 256²；FR 测试 PAN 512²）
     scenes: "WV3: 里约热内卢(2016-05-02, 2016-01-23)、的黎波里(2015-08-31, 2016-03-08)；WV2: 华盛顿特区(2016-08-15)、斯德哥尔摩(2016-08-27)；QB: 印第安纳波利斯；GF2: 广州。测试区为各景扣出的子区，训练块来自同城其余区域"
     access: cloud
     license: GPL-2.0
