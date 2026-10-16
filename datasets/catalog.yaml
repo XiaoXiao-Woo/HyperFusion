@@ -851,3 +851,55 @@ datasets:
     access: cloud
     license: CC BY 4.0
     citation: Yuan et al., IEEE TGRS 2024
+
+  # ---------------------------------------------------------------- 8.7 卫星 / 航拍视角 3D 生成
+  - id: aerial_earth3d
+    name: Aerial-Earth3D (EarthCrafter)
+    category: city3d
+    scenes: 50000
+    tile_m: 600
+    classes: 25
+    homepage: https://github.com/whiteinblue/EarthCrafter
+    repo: https://github.com/alibaba-damo-academy/earthcrafter
+    access: registration
+    note: 截至 2026-10-16 数据未公开发布
+    citation: Zhou et al., EarthCrafter, AAAI 2026
+
+  - id: citydreamer_osm_ges
+    name: CityDreamer OSM + GoogleEarth
+    category: city3d
+    homepage: https://github.com/hzxie/CityDreamer
+    access: cloud
+    license: NTU S-Lab License 1.0
+    citation: Xie et al., CityDreamer, CVPR 2024
+
+  - id: omnicity
+    name: OmniCity
+    category: city3d
+    images: 100000
+    locations: 25000
+    homepage: https://city-super.github.io/omnicity/
+    access: registration
+    citation: Li et al., OmniCity, CVPR 2023
+
+  - id: sat2city_synth
+    name: Sat2City synthesized city dataset
+    category: city3d
+    homepage: https://arxiv.org/abs/2507.04403
+    access: registration
+    citation: Hua et al., Sat2City, ICCV 2025
+
+  - id: culture3d
+    name: CULTURE3D
+    category: city3d
+    images: 41006
+    homepage: https://arxiv.org/abs/2501.06927
+    access: registration
+
+  - id: gs_voxel
+    name: GS-Voxel（方法，训练数据未公开）
+    category: city3d
+    homepage: https://arxiv.org/abs/2608.17988
+    access: registration
+    note: 以卫星视角影像为条件生成航拍 3DGS；200 m × 200 m 瓦片
+    citation: Qian et al., GS-Voxel, 2026

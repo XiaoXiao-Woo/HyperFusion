@@ -263,6 +263,21 @@ ehu.eus 场景的直链（`.mat`）已写入 `datasets/catalog.yaml`，可用脚
 | **RRSIS-D** | 指代分割（掩码） | 17,402 组影像-描述-掩码 | DIOR | https://github.com/Lsan2401/RMSIN （Google Drive / 百度网盘） | Liu et al., CVPR 2024 |
 | **RefSegRS** | 指代分割（掩码） | 4,420 组 | SkyScapes 航拍 | https://github.com/zhu-xlab/rrsis ；https://huggingface.co/datasets/JessicaYuan/RefSegRS | CC BY 4.0；Yuan et al., IEEE TGRS 2024 |
 
+### 8.7 卫星 / 航拍视角 3D 场景生成（GS-Voxel 相关）
+
+来源：GS-Voxel（arXiv 2608.17988，Qian 等，高德 / 浙大 / 北大）。该方法把已重建的航拍 3DGS 场景（200 m × 200 m 瓦片，可超过 300 万个高斯基元）无需逐场景优化地转为稀疏体素，用分解式 VAE 编码为结构化潜变量，再以卫星视角影像为条件用流模型生成，并通过重叠感知的分块推理扩展到大范围。论文未确认公开其训练用航拍 3DGS 数据。以下为同方向可用的公开数据集。
+
+| 数据集 | 内容 | 规模 | 下载 | 许可 / 引用 |
+|---|---|---|---|---|
+| **Aerial-Earth3D**（EarthCrafter） | Google Earth 多视帧重建的航拍场景，每景含位姿标注的多视图影像、深度、法线、25 类语义分割；布局输入含 OSM 道路、DEM 与建筑高度 | 50,000 景，每景 600 m × 600 m，约 4,500 万帧，覆盖美国本土 | https://github.com/whiteinblue/EarthCrafter ；代码 https://github.com/alibaba-damo-academy/earthcrafter | 数据发布"视公司规定而定"，截至整理日未开放；Zhou et al., AAAI 2026 |
+| **CityDreamer OSM + GoogleEarth** | OSM 城市布局（高度图 / 语义图）与 Google Earth 渲染的多视图影像，附建筑实例标注 | 实例标注生成约需 1 TB 磁盘 | https://github.com/hzxie/CityDreamer （gateway.infinitescript.com） | NTU S-Lab License 1.0；Xie et al., CVPR 2024 |
+| **OmniCity** | 纽约市卫星影像 + 全景与单视街景，像素级标注，多层级多视角对齐 | 10 万+ 张标注影像，2.5 万个地理位置 | https://city-super.github.io/omnicity/ | Li et al., CVPR 2023 |
+| **Sat2City 合成数据集** | 合成大规模 3D 城市与卫星视角高度图配对，用于单张卫星影像生成 3D 城市 | — | 见论文 arXiv 2507.04403 项目页 | Hua et al., ICCV 2025 |
+| **CULTURE3D** | 文化地标与地形的摄影测量数据（RGB-D + 点云），面向 3DGS 大场景渲染评测 | 41,006 张影像 | 见论文 arXiv 2501.06927 项目页 | 2025 |
+| **GauU-Scene / UrbanScene3D / MatrixCity / Mill-19** | 见 8.4 节，可作为航拍 3DGS 重建与生成的输入场景 | — | — | — |
+
+相关方法（供对比）：Sat2Scene（CVPR 2024，卫星到 3D 城市扩散生成，在 OmniCity 上测试泛化）、Sat2Density / Sat2Density++、Sat3DGen（2026，在 VIGOR-OOD 上评估）。
+
 ---
 
 ## 9. 仿真协议与评价指标
