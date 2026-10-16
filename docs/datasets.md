@@ -540,5 +540,7 @@ WorldView 系列（DigitalGlobe，现 Maxar）是全色锐化、亚米级目标�
 | **IARPA MVS3DM** | 多视立体 | WV-3 50 景，阿根廷 San Fernando，2015–2016 | 100 km²，8 个可重建站点，机载雷达 DSM 真值 | ≈40 GB（估算） | https://spacenet.ai/iarpa-multi-view-stereo-3d-mapping/ | 公开 |
 | **Maxar Open Data** | 灾害变化检测、建筑提取 | WV-1/2/3、GeoEye-1 ARD | 数十个事件（如 2023 土耳其地震、Maui 火灾） | 单事件数 GB 至数十 GB | https://registry.opendata.aws/maxar-open-data/ | CC BY-NC 4.0 |
 
+用于扩充 PanCollection 训练数据的候选筛选、核对清单与处理流程见 [`worldview_training_data.md`](worldview_training_data.md)。
+
 与 HyperFusion 的关系：WV-3 的 8 波段 VNIR 加 8 波段 SWIR 是目前唯一商业化的"多光谱 + 短波红外 + 亚米级全色"组合，可作为高光谱锐化的低维近似基准；PanCollection WV3 与 PAirMax 已是本项目全色锐化的默认训练与评估数据。
 
