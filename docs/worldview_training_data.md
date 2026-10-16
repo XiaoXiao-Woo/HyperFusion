@@ -25,14 +25,14 @@
 | `pan` | 降分辨率 PAN | N × 1 × 256 × 256 | 原始 PAN（1024×1024）经 MTF 模糊 + 4 倍抽取 |
 
 全分辨率测试集（`test_*_OrigScale_*.h5`）不含 `gt`，`ms` 为原始 MS，`pan` 为原始 PAN。
-MTF 奈奎斯特增益（Vivone 等工具箱默认值，**待核对**）：
+MTF 奈奎斯特增益直接用已有 DLPan-Toolbox 的设置（下表为其默认值，仅作参考）：
 
 | 传感器 | MS 各波段 | PAN |
 |---|---|---|
 | WV3 | 0.325, 0.355, 0.360, 0.350, 0.365, 0.360, 0.350, 0.315 | 0.5 |
 | WV2 | 0.35 ×7, 0.27 | 0.11 |
 
-工具：DLPan-Toolbox（https://github.com/liangjiandeng/DLPan-Toolbox ）内含 MATLAB 的 Wald 协议生成与评估代码（`MTF`、`interp23tap`、`Q2n`、`SAM`、`ERGAS`、`HQNR`）。
+Wald 协议生成（`MTF`、`interp23tap`）与评估（`Q2n`、`SAM`、`ERGAS`、`HQNR`）直接用已有的 DLPan-Toolbox，不需另找工具。
 
 ### 1.3 扩充原则
 
@@ -152,8 +152,7 @@ xView（WV-3 RGB，20.7 GB）、xBD / xView2（Maxar RGB，10–30 GB）、LEVIR
 | 7 | US3D / DFC2019 各 Track 是否含**原始 PAN** | 登录 IEEE DataPort 看文件清单 / README | 有则纳入 |
 | 8 | PAirMax Maxar 9 对的**城市**与 PanCollection 测试景是否重叠 | 读 PAirMax 论文（Vivone et al., JSTARS 2021）表 1 | 不重叠方可用于训练 |
 | 9 | PanBench 下载链接与 WV 子集实际体积 | 读 arXiv 2311.12083 代码链接 | 得到链接 |
-| 10 | WV3 / WV2 的 MTF 增益值 | 读 DLPan-Toolbox 或 Vivone 工具箱 `MTF.m` | 与 §1.2 一致 |
-| 11 | ESA TPM 对 Dragon 计划（中国）用户的申请资格与配额 | 读 EUSI Terms of Applicability | 明确是否可申请 |
+| 10 | ESA TPM 对 Dragon 计划（中国）用户的申请资格与配额 | 读 EUSI Terms of Applicability | 明确是否可申请 |
 
 ---
 
@@ -184,7 +183,7 @@ xView（WV-3 RGB，20.7 GB）、xBD / xView2（Maxar RGB，10–30 GB）、LEVIR
 
 1. 用 PanCollection 上已训练的基线模型（如 PNN / PanNet / FusionNet 的公开权重）在新验证集上推理，SAM / ERGAS / Q8 的分布应与 PanCollection 验证集同量级；若系统性偏差大，优先怀疑辐射量级或 MTF 设置。
 2. 混合训练（PanCollection + 新数据）后，在 PanCollection 原测试集（降分辨率 20 景 + 全分辨率 20 景）上评估，指标不应下降；再在新数据的保留城市上评估泛化。
-3. 全分辨率用 HQNR / D_λ / D_s；DLPan-Toolbox 提供实现。
+3. 全分辨率用 HQNR / D_λ / D_s（DLPan-Toolbox 已有实现）。
 
 ### 4.4 许可与发布
 
