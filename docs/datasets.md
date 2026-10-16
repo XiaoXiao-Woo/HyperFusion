@@ -21,6 +21,7 @@
 8. [城市级 3D 场景与视觉定位（点云 / 多视图）](#8-城市级-3d-场景与视觉定位点云--多视图)
 9. [仿真协议与评价指标](#9-仿真协议与评价指标)
 10. [建议的数据目录结构](#10-建议的数据目录结构)
+11. [数据体积统计](#11-数据体积统计)
 
 ---
 
@@ -343,3 +344,138 @@ data/
 - **直链**（ehu.eus、CAVE、Harvard 等）：`python tools/download_datasets.py --out data/ --name pavia_u cave harvard`
 - **需注册**（PRISMA、EnMAP、CRESDA、USGS、Houston）：按表中链接注册申请后手动放入对应目录。
 - **网盘 / 云盘**（PanCollection、ZY1-02D、WHU-Hi）：从官方页面的 Google Drive / 百度网盘链接下载。
+
+---
+
+## 11. 数据体积统计
+
+以下体积来自官方页面、Hugging Face / Zenodo / IEEE DataPort / mediaTUM 文件列表或镜像站标注；标"估算"者由像元数 / 点数 / 影像数与典型字节数推算，置信度较低。按景分发的卫星门户（PRISMA、EnMAP、Hyperion、GF-5、AVIRIS）只给出每景体积，不计入合计。合计数由 `python tools/dataset_stats.py --markdown` 从 `datasets/catalog.yaml` 生成。
+
+### 11.1 按类别汇总
+
+| 类别 | 条目数 | 合计体积 | 其中估算值 |
+|---|---|---|---|
+| 高光谱-多光谱融合 | 14 | 113.9 GB | 100.8 GB |
+| 真实卫星配对 / 数据源 | 8 | 8.8 GB | 8.8 GB |
+| 全色锐化 | 3 | 20.6 GB | 31 MB |
+| HSI+LiDAR/SAR 多模态 | 6 | 3.7 GB | 3.2 GB |
+| 时空融合 | 5 | 19.8 GB | 14.2 GB |
+| SAR-光学 | 6 | 889.0 GB | 14.5 GB |
+| 下游任务 / 2D 视觉定位 | 11 | 45.2 GB | 18.7 GB |
+| 通用遥感基准 | 11 | 273.2 GB | 187.5 GB |
+| 城市级 3D 场景 | 37 | 23.9 TB | 3.4 TB |
+| **合计** | 101 | **25.2 TB** | 3.8 TB |
+
+按获取方式：需注册 / 申请约 20.2 TB，网盘 / 云盘约 4.8 TB，直链约 161 GB，GitHub 托管约 94 GB。
+
+几点说明：
+- **城市级 3D 场景占 95%**，主要来自 UrbanScene3D（约 18 TB，含 12.8 万张原始影像，子场景可单独下载）、OpenFly（约 2.4 TB）和 MatrixCity（全量约 2 TB，仅点云 29 GB）。若只做城市级 3D 定位，SensatUrban + CityRefer + STPLS3D 合计约 50 GB 即可。
+- **SAR-光学类**体积集中在 SEN12MS（452 GB）、SEN12MS-CR（272 GB）和 So2Sat（107 GB）。
+- **高光谱融合主线**（第 1 节与第 2 节）合计约 150 GB，其中 ICVL 全集约 75 GB，ARAD_1K 约 25 GB，PanCollection 约 20 GB；ehu.eus 经典场景全部不到 400 MB。
+- 未发布或未统计：CitySTAR-3D、Aerial-Earth3D（估计 15–25 TB）、Sat2City 合成数据集、OpenCity3D 基准、GS-Voxel 训练数据。
+
+### 11.2 逐条明细
+
+| id | 名称 | 体积 | 依据 |
+|---|---|---|---|
+| cave | CAVE Multispectral Image Database | 819 MB（估算） | 官方 complete_ms_data.zip 未标体积，估算 0.5–1 GB；IEEE DataPort 镜像 2.51 GB |
+| harvard | Harvard Real-World Hyperspectral Images Database | 7.5 GB | CZ_hsdb.tgz 5.3 GB + CZ_hsdbi.tgz 2.2 GB（官方下载页） |
+| icvl | ICVL Hyperspectral Database | 75.0 GB（估算） | 31 波段 .mat 估算 60–90 GB；含原始 ENVI 全集约 335 GB（HF ICVL-BGU/ICVL_HS_2016） |
+| arad_1k | ARAD_1K (NTIRE 2022 Spectral Recovery) | 25.0 GB（估算） | 估算：950 张 482×512×31 float32 ≈29 GB，压缩后约 20–25 GB |
+| pavia_u | Pavia University | 34 MB | PaviaU.mat 33.2 MB（ehu.eus） |
+| pavia_c | Pavia Centre | 127 MB | Pavia.mat 123.6 MB（ehu.eus） |
+| indian_pines | Indian Pines | 6 MB | Indian_pines_corrected.mat 5.7 MB（ehu.eus） |
+| salinas | Salinas | 26 MB | Salinas_corrected.mat 25.3 MB（ehu.eus） |
+| ksc | Kennedy Space Center | 58 MB | KSC.mat 56.8 MB（ehu.eus） |
+| botswana | Botswana | 81 MB | Botswana.mat 78.9 MB（ehu.eus） |
+| wdc_mall | Washington DC Mall | 148 MB | dc.tif 145 MB（Purdue MultiSpec 页面） |
+| chikusei | Chikusei | 2.4 GB | ENVI zip ≈1.0 GB + MATLAB zip ≈1.4 GB（SAL-UTokyo；hyper.ai 镜像列 1.0 + 2.33 GB） |
+| whu_hi | WHU-Hi (LongKou / HanChuan / HongHu) | 1.0 GB | 三景 .mat 合计约 0.9–1.1 GB（Kaggle 886 MB / HF 镜像 1.14 GB） |
+| xiongan | Xiong'an (马蹄湾村) 航空高光谱 | 1.8 GB | geodoi 6 个文件压缩 1.75 GB，解压 2.83 GB |
+| whu_mhf | WHU-MHF | 5.0 GB（估算） | 估算：7 景 HSI(148 波段)+MSI(8 波段) uint16 未压缩 |
+| zy1_02d_cssnet | ZY1-02D Real HSI/MSI/PAN (CSSNet) | 2.0 GB（估算） | 估算：HSI 76 波段+MSI 8 波段+PAN 2.5 m，1–3 GB |
+| prisma_hp | PRISMA Hyperspectral Pansharpening (WHISPERS 2022 / toolbox) | 205 MB（估算） | 每景 L2D ≈1 GB（prismaread 文档）；WHISPERS 2022 挑战集 ≈0.2 GB 估算 |
+| c2seg_ab | C2Seg-AB / Berlin–Augsburg EnMAP-S2-S1 | 1.6 GB（估算） | 估算：Berlin+Augsburg 242 波段 int16 未压缩；mediaTUM 页未列体积 |
+| enmap | EnMAP | 每景 1.2 GB | 每景 L2A ≈1–1.5 GB（EnMAP 产品规范：光谱影像上限 639 MB + 质量层） |
+| hyperion_ali | EO-1 Hyperion + ALI | 每景 512 MB | 每景 Hyperion L1 ≈0.3–0.5 GB，ALI ≈0.1–0.2 GB |
+| gf5_ahsi | GF-5 / GF-5B AHSI | 每景 2.6 GB | 每景估算：2000×2000×330×2B |
+| aviris | AVIRIS / AVIRIS-NG Data Portal | 每景 1.5 GB | 每条航线 AVIRIS-NG ≈1.1 GB zip / 2 GB 解压；Classic ≈1.5–3 GB；Classic L2 全集 25.7 TB |
+| pancollection | PanCollection (WV3 / QB / GF2 / WV2) | 20.0 GB | HF 镜像：训练 GF2 6 GB + QB 5.19 GB + WV3 5.57 GB + WV2 168 MB，验证 ≈1.9 GB，测试 ≈1–2 GB |
+| pairmax | PAirMax | 553 MB | Maxar 9 对 386 MB + Airbus 5 对 153.9 MB（Zenodo 7706102） |
+| dlpan_toolbox | DLPan-Toolbox | 31 MB（估算） | 纯代码仓库，无数据 |
+| houston2013 | Houston 2013 (IEEE GRSS DFC 2013) | 205 MB（估算） | 估算：349×1905×144 uint16 ≈191 MB + DSM；官网需申请 |
+| houston2018 | Houston 2018 (IEEE GRSS DFC 2018) | 3.0 GB（估算） | 未公布总量；栅格部分 ≈0.7 GB（含 5 cm RGB 410 MB），含多光谱 LiDAR 点云估计数 GB |
+| trento | Trento HSI + LiDAR | 12 MB | Italy_hsi.mat 11.5 MB + LiDAR 0.4 MB（GitHub） |
+| muufl | MUUFL Gulfport | 95 MB | 四个 .mat 合计约 93 MB（GitHub） |
+| berlin_augsburg_s2fl | Berlin / Augsburg HSI + SAR (S2FL) | 389 MB | Berlin + Augsburg 合集 378.72 MB（figshare 28112405） |
+| rs_fusion_datasets | rs-fusion-datasets（统一加载器） | 0 MB | 加载器，按需拉取上述数据集 |
+| cia | CIA (Coleambally Irrigation Area) | 1.4 GB（估算） | 估算：17 对 Landsat+MODIS 6 波段 uint16 未压缩 |
+| lgc | LGC (Lower Gwydir Catchment) | 2.9 GB（估算） | 估算：14 对，3200×2720 |
+| ahb_tianjin_daxing | AHB / Tianjin / Daxing | 8.9 GB（估算） | 估算：AHB 4.5 + Tianjin 2.7 + Daxing 1.7 GB 未压缩（各 27 对） |
+| wuhan_stf | Wuhan Dataset (GF / Landsat) | 1.0 GB（估算） | 估算：8 对 GF/Landsat，仓库内 train/test 目录 |
+| s2_s3_stf | Sentinel-2 / Sentinel-3 OLCI STF benchmark | 5.6 GB | Zenodo 14860220 各站点 zip 合计 5.6 GB |
+| sen12ms | SEN12MS | 452.0 GB | 论文 421.3 GiB；mediaTUM 列 510 GB |
+| sen1_2 | SEN1-2 | 43.7 GB | mediaTUM 1436631：43.7 GB，564,770 文件 |
+| sen12ms_cr | SEN12MS-CR / CR-TS（云去除） | 272.0 GB | SEN12MS-CR 272 GB（mediaTUM 1554803）；CR-TS 另约 663 GB 下载 / 2 TB 解压 |
+| qxs_saropt | QXS-SAROPT | 2.5 GB（估算） | 估算：20,000 对 256×256 PNG ≈2–3 GB（未压缩 5.2 GB） |
+| whu_opt_sar | WHU-OPT-SAR | 12.0 GB（估算） | 估算：100×5556×3704×6 通道 8 位未压缩 |
+| so2sat_lcz42 | So2Sat LCZ42 | 106.8 GB | h5：train 51.76 + val 55.07 + test 3.32 GB；mediaTUM v3 列 165 GB |
+| unmixing_rslab | Samson / Jasper Ridge / Urban（解混） | 24 MB | Samson 3.4 MB + Jasper Ridge 2.8 MB + Urban 16.9 MB |
+| abu | ABU (Airport-Beach-Urban) 异常检测 | 44 MB（估算） | 13 个 .mat 各 1.5–8.2 MB，合计约 40–45 MB |
+| had100 | HAD100 异常检测 | 1.7 GB（估算） | 估算：AVIRIS-NG 训练集 ≈1.45 GB + 100 幅测试图 0.2–0.5 GB |
+| hsi_cd_citius | Hermiston / Bay Area / Santa Barbara（高光谱变化检测） | 1.0 GB（估算） | Bay Area ≈196 MB + Hermiston ≈134 MB（DataPort 镜像）+ Santa Barbara 估算 ≈650 MB |
+| levir_cd | LEVIR-CD | 2.5 GB | zip 2.46 GB（Kaggle 镜像与官方 Google Drive 同源） |
+| whu_cd | WHU Building Change Detection | 3.4 GB | 官方页标注 3.4 GB；IEEE DataPort 裁剪版 1.78 GB |
+| dior_rsvg | DIOR-RSVG | 6.0 GB（估算） | 估算：17,402 张 800×800 JPEG，与 RRSIS-D 同源 |
+| opt_rsvg | OPT-RSVG | 10.0 GB（估算） | 估算：25,452 张影像，尺寸 152² 至 8935×10569 |
+| vrsbench | VRSBench | 11.5 GB | VRSBench.zip 11.52 GB（hyper.ai 镜像） |
+| rrsis_d | RRSIS-D | 6.1 GB | rrsis.zip 6.07 GB（hyper.ai 镜像） |
+| refsegrs | RefSegRS | 3.0 GB | Hugging Face 下载量 2.97 GB（parquet 1.01 GB） |
+| uc_merced | UC Merced Land Use | 328 MB | 317 MiB（TensorFlow Datasets 目录） |
+| aid | AID | 2.6 GB（估算） | 估算：10,000 张 600×600 JPEG，AID.zip 常见约 2.6 GB |
+| nwpu_resisc45 | NWPU-RESISC45 | 410 MB（估算） | 估算：31,500 张 256×256 JPEG，.rar 约 405 MB |
+| eurosat | EuroSAT (RGB / MS) | 2.2 GB | Zenodo 7711810：RGB 94.7 MB + MS 2.1 GB |
+| bigearthnet | BigEarthNet (v1 S2/S1, v2 reBEN) | 120.0 GB（估算） | v1 S2 65.2 GB（tar.gz，已知）+ S1 ≈55 GB（估算）；v2 reBEN ≈120 GB（估算） |
+| isprs_potsdam_vaihingen | ISPRS Potsdam / Vaihingen 2D | 29.3 GB | ISPRS 页面：Potsdam 13.3 GB + Vaihingen 16.0 GB |
+| loveda | LoveDA | 18.5 GB | Zenodo 5706578：Train 6.66 + Val 8.92 + Test 2.91 GB |
+| gid | GID (Gaofen Image Dataset) | 50.0 GB（估算） | 估算：large-scale 150 幅 GF-2 ≈16 GB + fine 30,000 块 ≈35 GB |
+| dota | DOTA v1.0 / v2.0 | 35.4 GB | v1.0 含 test 共 35.38 GB（hyper.ai）；train+val 约 18 GB |
+| dior | DIOR | 7.5 GB（估算） | 估算：23,463 张 800×800 JPEG，DIOR.zip 常见约 7.3 GB |
+| s2looking | S2Looking | 7.0 GB（估算） | 估算：5,000 对 1024×1024 双时相 PNG + 标签 |
+| sensaturban | SensatUrban | 30.0 GB（估算） | 估算：28.5 亿点 PLY ≈45 GB 解压，zip 约 25–35 GB；官方 data_release.zip 未标体积 |
+| cityrefer | CityRefer | 512 MB（估算） | 估算：仅标注 JSON / box3d，<1 GB；点云另取 SensatUrban |
+| stpls3d | STPLS3D | 18.0 GB（估算） | 估算：点云 15–20 GB；含源影像约 50–100 GB |
+| stpls3d_refer | STPLS3D-Refer | 307 MB（估算） | 估算：仅文本 / 框标注，<0.5 GB；需 STPLS3D 点云 |
+| urbex_data | Urbex-Data | 20.0 GB（估算） | 估算：BEV 图 + 斜视缓存 10–30 GB；HF 卡片本环境不可达 |
+| urbanbis | UrbanBIS | 50.0 GB（估算） | 估算：点云 ASCII 100–150 GB 解压 / 压缩 40–60 GB；113k 张影像另 >1.5 TB |
+| whu_urban3d | WHU-Urban3D | 15.0 GB（估算） | 估算：标注点云 + ALS/MLS 原始点云 + 全景影像 10–20 GB |
+| dales | DALES | 6.0 GB（估算） | 估算：5.05 亿点 LAS 约 12–15 GB 解压，tar.gz 5–7 GB；提供 LAS/PLY/BIN |
+| h3d | Hessigheim 3D (H3D) | 17.0 GB（估算） | 估算：3 期点云 ≈11 GB + 纹理网格，15–20 GB |
+| sum_meshes | SUM (Semantic Urban Meshes) | 30.0 GB（估算） | 估算：300 pts/m² 点云 ≈24 GB + 30 pts/m² 2.4 GB + 64 块纹理网格 |
+| campus3d | Campus3D | 17.0 GB（估算） | 估算：9.37 亿点 PLY 15–19 GB；reduced 版 2–4 GB |
+| toronto3d | Toronto-3D | 1.1 GB | Toronto_3D.zip 1.07 GB（hyper.ai 镜像） |
+| paris_lille_3d | Paris-Lille-3D | 4.0 GB（估算） | 估算：1.43 亿训练点 + 测试 PLY 3–5 GB |
+| semantic3d | Semantic3D | 20.0 GB（估算） | 估算：40 亿点 ASCII ≈140 GB 解压，7z 压缩 15–25 GB |
+| citynav | CityNav | 12.0 GB（估算） | 估算：data.tar.gz（RGB/深度/GSAM）5–20 GB；另需 SensatUrban 点云 |
+| aerialvln | AerialVLN | 35.0 GB | README：模拟器约 35 GB，标注数据 <100 MB |
+| openfly | OpenFly | 2.4 TB | 维护者在 issue #11 称数据集共约 2.4 TB；DataGen 环境另约 50–150 GB（估算） |
+| embodiedcity | EmbodiedCity | 20.0 GB（估算） | 估算：UE 打包北京商务区场景 10–30 GB；VLN 文本 <100 MB |
+| cityeqa | CityEQA-EC | 10 MB | 仓库 Data/ 仅 JSON；需 EmbodiedCity 模拟器 |
+| urbanvideo_bench | UrbanVideo-Bench | 40.0 GB（估算） | 估算：1,547 段 720p 视频 20–60 GB |
+| urbanscene3d | UrbanScene3D | 18.0 TB | 论文补充材料：影像 16,860 GB + 重建模型 656 GB + 纹理 507 GB，子场景可单独下载 |
+| matrixcity | MatrixCity | 2.0 TB（估算） | 点云 27.8 + 1.64 GB 已知；全量 RGB + 深度估算 1.5–2.5 TB，仅 RGB ≈0.8 TB |
+| mill19 | Mill-19 (Mega-NeRF) | 20.0 GB（估算） | 估算：building 1,940 张 + rubble 1,678 张 4608×3456 JPEG |
+| us3d | DFC2019 / US3D (Urban Semantic 3D) | 200.0 GB（估算） | 估算：DFC2019 Track 1–4 + Atlanta 扩展 100–300 GB；DataPort 需订阅查看 |
+| whu_tlc | WHU-TLC (SatMVS) | 20.0 GB（估算） | 估算：三线阵 5120×5120 + RPC + DSM + 裁块 10–30 GB |
+| whu_stereo | WHU-Stereo | 8.0 GB（估算） | 估算：1,757 对 1024×1024 uint16 PNG + 视差，约 5 MB/对 |
+| urb3dcd | Urb3DCD / V2 / Cls | 1.8 GB | DataPort：V1 1.02 GB + V2 0.45 GB + Cls 0.31 GB |
+| aerial_earth3d | Aerial-Earth3D (EarthCrafter) | — | 未发布；按 4,500 万帧估算 15–25 TB |
+| citydreamer_osm_ges | CityDreamer OSM + GoogleEarth | 4.3 GB | OSM + GoogleEarth 合包 4.31 GB（hyper.ai 镜像） |
+| omnicity | OmniCity | 75.0 GB（估算） | 估算：2.5 万地点 × 卫星切片 + 全景 + 单视图，50–100 GB |
+| sat2city_synth | Sat2City synthesized city dataset | — | 未发布（thua919/Sat2City-release 标 Coming soon） |
+| culture3d | CULTURE3D | 800.0 GB（估算） | 估算：41,006 张 48 MP JPEG ≈600 GB + COLMAP + 纹理网格，0.6–1 TB |
+| gs_voxel | GS-Voxel（方法，训练数据未公开） | — | 训练数据未公开 |
+| citystar_3d | CitySTAR-3D | — | 未发布；标注文本本身预计 <50 MB，点云取自 SensatUrban / STPLS3D |
+| city3dqa | 3DCity-LLM-1.2M / City-3DQA | 1.0 GB（估算） | 估算：120 万条 QA 文本约 1 GB；点云另取自 SensatUrban / UrbanBIS |
+| geoeval3d | GeoEval3D (GeoProg3D) | 10 MB（估算） | 952 组问答文本，<10 MB；3D 高斯场景需自行重建 |
+| opencity3d | OpenCity3D benchmark | — | 基准数据未单独发布；依赖航拍网格渲染 |
