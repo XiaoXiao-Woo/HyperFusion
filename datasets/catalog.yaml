@@ -1,7 +1,7 @@
 # HyperFusion 遥感数据集清单（机器可读）
 # 字段说明：
 #   id        : 唯一标识，供 tools/download_datasets.py --name 使用
-#   category  : hsi_msi | real_pairs | pansharpening | multimodal | spatiotemporal | sar_optical | downstream
+#   category  : hsi_msi | real_pairs | pansharpening | multimodal | spatiotemporal | sar_optical | downstream | city3d
 #   access    : direct（可直链下载）| registration（需注册 / 申请）| cloud（网盘 / 云盘）| github
 #   files     : 直链文件列表，仅 access=direct 的条目填写
 # 人类可读说明见 docs/datasets.md。整理日期 2026-10-16。
@@ -529,3 +529,60 @@ datasets:
     category: downstream
     homepage: http://gpcv.whu.edu.cn/data/building_dataset.html
     access: cloud
+
+  # ---------------------------------------------------------------- 8 城市级 3D 场景
+  - id: sensaturban
+    name: SensatUrban
+    category: city3d
+    sensor: 无人机摄影测量点云（Birmingham / Cambridge / York）
+    points: 3e9
+    area_km2: 7.6
+    classes: 13
+    homepage: https://github.com/QingyongHu/SensatUrban
+    mirrors:
+      - http://point-cloud-analysis.cs.ox.ac.uk/
+    access: registration
+    citation: Hu et al., Towards Semantic Segmentation of Urban-Scale 3D Point Clouds, CVPR 2021 / IJCV 2022
+
+  - id: cityrefer
+    name: CityRefer
+    category: city3d
+    base: sensaturban
+    descriptions: 35000
+    landmarks: 5000
+    homepage: https://github.com/ATR-DBI/CityRefer
+    access: cloud
+    license: MIT（代码）
+    citation: Miyanishi et al., CityRefer, NeurIPS 2023 Datasets and Benchmarks
+
+  - id: stpls3d
+    name: STPLS3D
+    category: city3d
+    sensor: 合成 + 真实航空摄影测量点云
+    area_km2: [16, 1.27]
+    classes: 18
+    instance_classes: 14
+    homepage: https://github.com/meidachen/STPLS3D
+    mirrors:
+      - https://www.stpls3d.com/
+    access: registration
+    citation: Chen et al., STPLS3D, BMVC 2022
+
+  - id: stpls3d_refer
+    name: STPLS3D-Refer
+    category: city3d
+    base: stpls3d
+    homepage: https://github.com/WHU-USI3DV/CityAnchor
+    access: github
+    citation: Li et al., CityAnchor, ICLR 2025
+
+  - id: urbex_data
+    name: Urbex-Data
+    category: city3d
+    base: [cityrefer, stpls3d]
+    homepage: https://huggingface.co/datasets/vvangfaye/Urbex-Data
+    repo: https://github.com/AMAP-ML/Urbex
+    model: https://huggingface.co/vvangfaye/Urbex-4B
+    access: cloud
+    license: Apache-2.0
+    citation: Wang et al., Urbex - Agentic Spatial Grounding for City-Scale 3D Scenes, NeurIPS 2026 (arXiv 2610.18356)

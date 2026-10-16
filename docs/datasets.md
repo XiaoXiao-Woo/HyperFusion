@@ -18,8 +18,9 @@
 5. [SAR–光学融合 / 云去除](#5-sar光学融合--云去除)
 6. [高光谱下游任务（解混 / 异常检测 / 变化检测 / 去噪）](#6-高光谱下游任务解混--异常检测--变化检测--去噪)
 7. [通用遥感基准（分类 / 分割 / 检测 / 变化检测）](#7-通用遥感基准分类--分割--检测--变化检测)
-8. [仿真协议与评价指标](#8-仿真协议与评价指标)
-9. [建议的数据目录结构](#9-建议的数据目录结构)
+8. [城市级 3D 场景与视觉定位（点云 / 多视图）](#8-城市级-3d-场景与视觉定位点云--多视图)
+9. [仿真协议与评价指标](#9-仿真协议与评价指标)
+10. [建议的数据目录结构](#10-建议的数据目录结构)
 
 ---
 
@@ -189,7 +190,23 @@ ehu.eus 场景的直链（`.mat`）已写入 `datasets/catalog.yaml`，可用脚
 
 ---
 
-## 8. 仿真协议与评价指标
+## 8. 城市级 3D 场景与视觉定位（点云 / 多视图）
+
+来源：Urbex（arXiv 2610.18356，NeurIPS 2026）及其前序工作 CityRefer、CityAnchor。此类数据由无人机倾斜摄影 / 航空 LiDAR 得到城市级点云，并附自然语言描述，用于城市尺度 3D 视觉定位（3D visual grounding）、语义 / 实例分割；可作为 HyperFusion 中多视图、BEV 与 3D 模态融合的扩展基准。
+
+| 数据集 | 内容 | 规模 | 下载 | 许可 / 引用 |
+|---|---|---|---|---|
+| **SensatUrban** | 英国 3 座城市（Birmingham、Cambridge、York）无人机摄影测量点云，13 类语义标注 | 约 30 亿点，7.6 km² | https://github.com/QingyongHu/SensatUrban ；http://point-cloud-analysis.cs.ox.ac.uk/ （需填表申请） | Hu et al., CVPR 2021 / IJCV 2022 |
+| **CityRefer** | 基于 SensatUrban 场景的 3D 视觉定位标注：对象自然语言描述 + 与 OpenStreetMap 同步的地标标签 | 约 35k 条描述，5k 地标 | https://github.com/ATR-DBI/CityRefer （Google Drive，可用 gdown） | MIT（代码）；Miyanishi et al., NeurIPS 2023 D&B |
+| **STPLS3D** | 合成 + 真实航空摄影测量点云，语义（最多 18 类）与实例（14 类）标注 | 合成 62 景约 16 km²；真实约 1.27 km² | https://github.com/meidachen/STPLS3D ；https://www.stpls3d.com/ （Google Forms 申请） | 未声明许可；Chen et al., BMVC 2022 |
+| **STPLS3D-Refer** | 基于 STPLS3D 合成场景的 3D 视觉定位标注，Urbex 用于零样本跨场景评估 | — | 随 CityAnchor（https://github.com/WHU-USI3DV/CityAnchor ）与 Urbex 数据包发布 | Li et al., ICLR 2025 |
+| **Urbex-Data** | Urbex 训练 / 评估数据包：CityRefer 与 STPLS3D 的 BEV 图像、倾斜视图缓存、候选框与划分（`cityrefer_ND`、`cityrefer_NO`、`stpls3d`）；原始点云需另行从 SensatUrban 申请 | — | https://huggingface.co/datasets/vvangfaye/Urbex-Data （`scripts/data/download.sh`，带校验和）；代码 https://github.com/AMAP-ML/Urbex ；模型 https://huggingface.co/vvangfaye/Urbex-4B | Apache-2.0；Wang et al., NeurIPS 2026 |
+
+说明：Urbex 将城市级 3D 定位视为主动搜索任务，由视觉语言模型智能体在多视图间探索并经强化学习决定"看哪里、如何细化、何时作答"，不依赖预先计算的实例候选。
+
+---
+
+## 9. 仿真协议与评价指标
 
 **Wald 协议（降分辨率评估）**
 1. 参考 HR-HSI → 高斯模糊（常用 σ 使 MTF 增益 ≈ 0.3 或 3×3 / 7×7 核）→ 下采样 r 倍（r = 4、8、16、32）得到 LR-HSI。
@@ -212,7 +229,7 @@ ehu.eus 场景的直链（`.mat`）已写入 `datasets/catalog.yaml`，可用脚
 
 ---
 
-## 9. 建议的数据目录结构
+## 10. 建议的数据目录结构
 
 ```
 data/
@@ -232,7 +249,8 @@ data/
 ├── multimodal/         # 3
 ├── spatiotemporal/     # 4
 ├── sar_optical/        # 5
-└── downstream/         # 6 / 7
+├── downstream/         # 6 / 7
+└── city3d/             # 8
 ```
 
 获取方式说明：
