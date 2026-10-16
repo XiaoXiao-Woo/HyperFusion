@@ -37,6 +37,7 @@ CATEGORY_NAMES = {
     "downstream": "下游任务 / 2D 视觉定位",
     "general": "通用遥感基准",
     "city3d": "城市级 3D 场景",
+    "worldview": "WorldView 专题",
 }
 
 

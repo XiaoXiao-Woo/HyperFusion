@@ -22,6 +22,7 @@
 9. [仿真协议与评价指标](#9-仿真协议与评价指标)
 10. [建议的数据目录结构](#10-建议的数据目录结构)
 11. [数据体积统计](#11-数据体积统计)
+12. [WorldView 数据专题](#12-worldview-数据专题)
 
 ---
 
@@ -364,7 +365,8 @@ data/
 | 下游任务 / 2D 视觉定位 | 11 | 45.2 GB | 18.7 GB |
 | 通用遥感基准 | 11 | 273.2 GB | 187.5 GB |
 | 城市级 3D 场景 | 37 | 23.9 TB | 3.4 TB |
-| **合计** | 101 | **25.2 TB** | 3.8 TB |
+| WorldView 专题 | 9 | 1.1 TB | 1.0 TB |
+| **合计** | 110 | **26.3 TB** | 4.8 TB |
 
 按获取方式：需注册 / 申请约 20.2 TB，网盘 / 云盘约 4.8 TB，直链约 161 GB，GitHub 托管约 94 GB。
 
@@ -479,3 +481,64 @@ data/
 | city3dqa | 3DCity-LLM-1.2M / City-3DQA | 1.0 GB（估算） | 估算：120 万条 QA 文本约 1 GB；点云另取自 SensatUrban / UrbanBIS |
 | geoeval3d | GeoEval3D (GeoProg3D) | 10 MB（估算） | 952 组问答文本，<10 MB；3D 高斯场景需自行重建 |
 | opencity3d | OpenCity3D benchmark | — | 基准数据未单独发布；依赖航拍网格渲染 |
+| maxar_product_samples | Maxar 产品样例影像（WV-2 / WV-3 / WV Legion / GeoEye-1） | 每景 1.0 GB | 每景样例约 0.3–3 GB（PAN + 8 波段 MS，GeoTIFF/NITF）；PAirMax 与 Adelaide/Mexico City 全分辨率测试图均源于此 |
+| maxar_open_data | Maxar Open Data Program（灾害事件 ARD 影像） | 500.0 GB（估算） | 估算：STAC 目录覆盖数十个事件，单事件数 GB 至数十 GB（如 Maui 火灾 2023 约 3.5 GB）；总量随事件持续增长 |
+| esa_tpm_worldview | ESA Third Party Missions WorldView 档案 | 每景 1.5 GB | 每景约 0.5–3 GB；档案覆盖 2009–2020 年 ESA 资助项目的申请区域 |
+| spacenet | SpaceNet 1–8 | 400.0 GB（估算） | 估算：SN1 Rio ≈3 GB，SN2 四城 ≈30 GB，SN3 道路 ≈50 GB，SN4 Atlanta 离轴 ≈180 GB，SN5 ≈60 GB，SN6 ≈40 GB，SN7 ≈23 GB，SN8 ≈20 GB |
+| xview | xView（目标检测） | 20.7 GB | 挑战赛站点下载约 20.7 GB（Ultralytics 文档） |
+| xbd | xBD / xView2（建筑损毁评估） | 30.3 GB | 挑战赛数据约 10 GB 压缩（baseline README）；含 tier3 全集约 30.3 GB（hyper.ai 镜像） |
+| mvs3dm | IARPA MVS3DM（多视立体，阿根廷） | 40.0 GB（估算） | 估算：50 景 WV3 PAN + 8 波段 NITF，约 20–60 GB；含机载雷达真值 DSM |
+| core3d | IARPA CORE3D 开放数据（Jacksonville / Omaha / UCSD） | 100.0 GB（估算） | 估算：三个站点的 WV3 多视影像；US3D / DFC2019 由此派生 |
+| wv3_fr_test_tiles | WV2 / WV3 全分辨率测试图（Washington、Stockholm、Adelaide、Mexico City） | 1.0 GB（估算） | 估算：各 20 块 512×512 全分辨率与 2048×2048 降分辨率瓦片（Vivone 等 2021 全分辨率评估协议） |
+
+---
+
+## 12. WorldView 数据专题
+
+WorldView 系列（DigitalGlobe，现 Maxar）是全色锐化、亚米级目标检测与卫星多视立体最常用的商业影像来源。本节汇总传感器参数、可免费获取的渠道，以及以 WorldView 影像为底的公开数据集（目录其他章节中的 PanCollection WV3/WV2、PAirMax、US3D 也属此类）。
+
+### 12.1 传感器参数
+
+| 卫星 | 发射 | 全色 GSD（星下点） | 多光谱 | SWIR / 其他 | 幅宽 | 备注 |
+|---|---|---|---|---|---|---|
+| **WorldView-1** | 2007 | 0.50 m | 无 | — | 17.7 km | 仅全色 |
+| **WorldView-2** | 2009 | 0.46 m | 8 波段 1.84 m（Coastal、B、G、Y、R、Red Edge、NIR1、NIR2） | — | 16.4 km | PanCollection WV2、PAirMax、SpaceNet 1 |
+| **WorldView-3** | 2014 | 0.31 m | 8 波段 1.24 m | SWIR 8 波段 3.7 m（1195–2365 nm）；CAVIS 12 波段 30 m | 13.1 km | PanCollection WV3、xView、SpaceNet 2–7、US3D、MVS3DM；16 波段 VNIR+SWIR 融合研究 |
+| **WorldView-4** | 2016（2019 年失效） | 0.31 m | 4 波段 1.24 m | — | 13.1 km | 存档影像可经 ESA TPM 申请 |
+| **WorldView Legion** | 2024 起 | 0.29 m | 8 波段 1.16 m | — | 9 km | 6 星星座，Maxar 样例可申请 |
+| GeoEye-1 / QuickBird | 2008 / 2001 | 0.41 m / 0.61 m | 4 波段 1.65 m / 2.44 m | — | 15.2 / 16.8 km | PanCollection QB、PAirMax GE1 同为 Maxar 系列 |
+
+商业标准产品每景（约 25 km² 以上条带）约 1–3 GB（PAN + 8 波段 MS，GeoTIFF / NITF，11 bit）。
+
+### 12.2 获取渠道
+
+| 渠道 | 内容 | 条件 / 许可 | 链接 |
+|---|---|---|---|
+| **Maxar 产品样例** | WV-2 / WV-3 / Legion / GeoEye-1 各城市样例景（PAN + MS，部分含 SWIR） | 填表申请，Maxar Evaluation License，禁止再分发 | https://resources.maxar.com/product-samples |
+| **Maxar Open Data Program** | 灾害事件前后 ARD 影像（COG 瓦片 + STAC 目录），数十个事件 | 免费，CC BY-NC 4.0，OSM 例外 | https://registry.opendata.aws/maxar-open-data/ ；工具 https://github.com/opengeos/maxar-open-data |
+| **ESA Third Party Missions** | WV-1/2/3/4 档案（2009–2020，ESA 资助项目申请过的区域），PAN、4/8 波段、SWIR | EO Sign In 注册后提交申请，约 2 天审批；面向 ESA / EU 成员国及 Dragon 计划（含中国）科研用户，有配额 | https://earth.esa.int/eogateway/catalog/worldview-esa-archive |
+| **NASA CSDA** | Maxar 档案与新采集影像 | 仅限 NASA 资助的美国研究人员 | https://www.earthdata.nasa.gov/esds/csda |
+| **USGS 商业影像（NextView / EOCL）** | WV 存档 | 仅限美国联邦政府及其承包方 | https://earthexplorer.usgs.gov |
+| **SpaceNet on AWS** | SpaceNet、CORE3D、MVS3DM 等已脱敏 WV2/WV3 影像 | 免费，CC BY-SA 4.0 | https://registry.opendata.aws/spacenet/ |
+| **国内代理** | 按景购买 WV-2/3 新采或存档 | 商业，约数百元/km² 量级 | 北京揽宇方圆、航天星图等 |
+
+另：以 Google Earth 为来源的数据集（LEVIR-CD、QXS-SAROPT 光学部分、DOTA 部分、CityDreamer GoogleEarth）在亚米级区域多为 Maxar WorldView 影像的再分发，可作为"间接 WorldView"数据，但无原始波段与辐射定标。
+
+### 12.3 以 WorldView 影像为底的公开数据集
+
+| 数据集 | 任务 | 卫星 | 规模 | 体积 | 下载 | 许可 |
+|---|---|---|---|---|---|---|
+| **PanCollection WV3 / WV2** | 全色锐化 | WV-3 8 波段（0.31 / 1.24 m）、WV-2 | WV3 训练约 1 万块 + 20/20 测试景；WV2 用于泛化 | WV3 ≈5.6 GB，WV2 ≈0.2 GB | 见第 2 节 | GPL-2.0 |
+| **PAirMax** | 全色锐化基准 | WV-2、WV-3、GeoEye-1（Maxar 9 对） | 14 对 FR + RR | 0.54 GB | 见第 2 节 | Maxar / Airbus 评估许可 |
+| **WV2 / WV3 全分辨率测试图** | 全分辨率 QA 协议 | WV-2（Washington、Stockholm）、WV-3（Adelaide、Mexico City） | 各 20 块 512×512 FR + 2048×2048 RR | ≈1 GB（估算） | https://github.com/liangjiandeng/DLPan-Toolbox | 源于 Maxar 样例 |
+| **WV3 VNIR+SWIR 16 波段融合** | 多波段锐化 | WV-3 8 VNIR + 8 SWIR | 仿真 + 真实 WV3 | — | Vivone et al., Information Fusion 2020（数据随 Maxar 样例） | 评估许可 |
+| **SpaceNet 1–8** | 建筑 / 道路提取、多时相、SAR-光学 | WV-2（Rio），WV-3（Las Vegas、Paris、Shanghai、Khartoum、Atlanta、Moscow、Mumbai 等），Capella SAR | 81 万建筑、2 万 km 道路，约 2.7 万 km² | ≈400 GB（估算） | https://spacenet.ai/datasets/ | CC BY-SA 4.0 |
+| **xView** | 目标检测 | WV-3 0.3 m | 100 万目标，60 类，1,400 km² | 20.7 GB | https://challenge.xviewdataset.org | CC BY-NC-SA 4.0 |
+| **xBD / xView2** | 建筑损毁评估（双时相） | Maxar WV-2/3 等 | 85 万建筑标注，45,362 km²，19 个灾害事件 | 10 GB（挑战赛）/ 30.3 GB（含 tier3） | https://xview2.org | CC BY-NC-SA 4.0 |
+| **DFC2019 / US3D** | 卫星多视立体 + 语义 | WV-3 PAN + 8 波段，Jacksonville / Omaha / Atlanta | 约 100 km²，数千瓦片 | ≈200 GB（估算） | 见 8.5 节 | IEEE DataPort |
+| **IARPA CORE3D** | 城市 3D 重建 | WV-3 多视 + 机载 LiDAR，Jacksonville / Omaha / UCSD | — | ≈100 GB（估算） | https://github.com/pubgeo/core3d-open | 公开 |
+| **IARPA MVS3DM** | 多视立体 | WV-3 50 景，阿根廷 San Fernando，2015–2016 | 100 km²，8 个可重建站点，机载雷达 DSM 真值 | ≈40 GB（估算） | https://spacenet.ai/iarpa-multi-view-stereo-3d-mapping/ | 公开 |
+| **Maxar Open Data** | 灾害变化检测、建筑提取 | WV-1/2/3、GeoEye-1 ARD | 数十个事件（如 2023 土耳其地震、Maui 火灾） | 单事件数 GB 至数十 GB | https://registry.opendata.aws/maxar-open-data/ | CC BY-NC 4.0 |
+
+与 HyperFusion 的关系：WV-3 的 8 波段 VNIR 加 8 波段 SWIR 是目前唯一商业化的"多光谱 + 短波红外 + 亚米级全色"组合，可作为高光谱锐化的低维近似基准；PanCollection WV3 与 PAirMax 已是本项目全色锐化的默认训练与评估数据。
+

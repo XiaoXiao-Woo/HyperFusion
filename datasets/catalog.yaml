@@ -1,7 +1,7 @@
 # HyperFusion 遥感数据集清单（机器可读）
 # 字段说明：
 #   id        : 唯一标识，供 tools/download_datasets.py --name 使用
-#   category  : hsi_msi | real_pairs | pansharpening | multimodal | spatiotemporal | sar_optical | downstream | general | city3d
+#   category  : hsi_msi | real_pairs | pansharpening | multimodal | spatiotemporal | sar_optical | downstream | general | city3d | worldview
 #   access    : direct（可直链下载）| registration（需注册 / 申请）| cloud（网盘 / 云盘）| github
 #   files     : 直链文件列表，仅 access=direct 的条目填写
 # 人类可读说明见 docs/datasets.md。整理日期 2026-10-16。
@@ -1293,3 +1293,114 @@ datasets:
     access: registration
     citation: Bieri et al., OpenCity3D, WACV 2025
     size_note: "基准数据未单独发布；依赖航拍网格渲染"
+
+  # ---------------------------------------------------------------- 12 WorldView 专题（获取渠道与以 WV 为底的数据集）
+  - id: maxar_product_samples
+    name: Maxar 产品样例影像（WV-2 / WV-3 / WV Legion / GeoEye-1）
+    category: worldview
+    sensor: WorldView-2/3, WorldView Legion, GeoEye-1
+    homepage: https://resources.maxar.com/product-samples
+    access: registration
+    license: Maxar Evaluation License，禁止再分发
+    size_per_scene_gb: 1.0
+    size_note: "每景样例约 0.3–3 GB（PAN + 8 波段 MS，GeoTIFF/NITF）；PAirMax 与 Adelaide/Mexico City 全分辨率测试图均源于此"
+
+  - id: maxar_open_data
+    name: Maxar Open Data Program（灾害事件 ARD 影像）
+    category: worldview
+    sensor: WorldView-1/2/3, GeoEye-1（RGB / 多光谱 ARD，COG 瓦片）
+    homepage: https://registry.opendata.aws/maxar-open-data/
+    mirrors:
+      - https://maxar.com/open-data
+      - https://github.com/opengeos/maxar-open-data
+    access: direct
+    license: CC BY-NC 4.0
+    size_gb: 500.0
+    size_estimated: true
+    size_note: "估算：STAC 目录覆盖数十个事件，单事件数 GB 至数十 GB（如 Maui 火灾 2023 约 3.5 GB）；总量随事件持续增长"
+
+  - id: esa_tpm_worldview
+    name: ESA Third Party Missions WorldView 档案
+    category: worldview
+    sensor: WorldView-1/2/3/4（PAN、4 波段、8 波段、SWIR）
+    homepage: https://earth.esa.int/eogateway/catalog/worldview-esa-archive
+    access: registration
+    license: ESA 数据政策，面向 ESA / EU 成员国与 Dragon 计划（含中国）用户，科研免费，有配额
+    size_per_scene_gb: 1.5
+    size_note: "每景约 0.5–3 GB；档案覆盖 2009–2020 年 ESA 资助项目的申请区域"
+
+  - id: spacenet
+    name: SpaceNet 1–8
+    category: worldview
+    sensor: WorldView-2（SN1）、WorldView-3（SN2–5、7）、Capella SAR + WV2（SN6）、Maxar/Planet（SN8）
+    homepage: https://spacenet.ai/datasets/
+    mirrors:
+      - https://registry.opendata.aws/spacenet/
+    access: direct
+    license: CC BY-SA 4.0
+    size_gb: 400.0
+    size_estimated: true
+    size_note: "估算：SN1 Rio ≈3 GB，SN2 四城 ≈30 GB，SN3 道路 ≈50 GB，SN4 Atlanta 离轴 ≈180 GB，SN5 ≈60 GB，SN6 ≈40 GB，SN7 ≈23 GB，SN8 ≈20 GB"
+
+  - id: xview
+    name: xView（目标检测）
+    category: worldview
+    sensor: WorldView-3 0.3 m
+    objects: 1000000
+    classes: 60
+    area_km2: 1400
+    homepage: https://challenge.xviewdataset.org
+    access: registration
+    license: CC BY-NC-SA 4.0
+    size_gb: 20.7
+    size_note: "挑战赛站点下载约 20.7 GB（Ultralytics 文档）"
+
+  - id: xbd
+    name: xBD / xView2（建筑损毁评估）
+    category: worldview
+    sensor: Maxar WorldView-2/3 等，RGB，0.3–0.5 m
+    annotations: 850736
+    area_km2: 45362
+    homepage: https://xview2.org
+    mirrors:
+      - https://github.com/DIUx-xView/xView2_baseline
+    access: registration
+    license: CC BY-NC-SA 4.0
+    size_gb: 30.3
+    size_note: "挑战赛数据约 10 GB 压缩（baseline README）；含 tier3 全集约 30.3 GB（hyper.ai 镜像）"
+
+  - id: mvs3dm
+    name: IARPA MVS3DM（多视立体，阿根廷）
+    category: worldview
+    sensor: WorldView-3 PAN + VNIR，50 景，2015–2016
+    area_km2: 100
+    homepage: https://spacenet.ai/iarpa-multi-view-stereo-3d-mapping/
+    access: direct
+    license: 公开（SpaceNet on AWS 托管）
+    size_gb: 40.0
+    size_estimated: true
+    size_note: "估算：50 景 WV3 PAN + 8 波段 NITF，约 20–60 GB；含机载雷达真值 DSM"
+
+  - id: core3d
+    name: IARPA CORE3D 开放数据（Jacksonville / Omaha / UCSD）
+    category: worldview
+    sensor: WorldView-3 多视影像 + 机载 LiDAR
+    homepage: https://github.com/pubgeo/core3d-open
+    mirrors:
+      - https://spacenet.ai/core3d/
+    access: direct
+    license: 公开，引用 Hagstrom et al., IGARSS 2021
+    size_gb: 100.0
+    size_estimated: true
+    size_note: "估算：三个站点的 WV3 多视影像；US3D / DFC2019 由此派生"
+
+  - id: wv3_fr_test_tiles
+    name: WV2 / WV3 全分辨率测试图（Washington、Stockholm、Adelaide、Mexico City）
+    category: worldview
+    sensor: WorldView-2 / WorldView-3（Maxar 样例影像裁剪）
+    homepage: https://github.com/liangjiandeng/DLPan-Toolbox
+    access: cloud
+    license: 源于 Maxar 样例，仅限评估
+    size_gb: 1.0
+    size_estimated: true
+    size_note: "估算：各 20 块 512×512 全分辨率与 2048×2048 降分辨率瓦片（Vivone 等 2021 全分辨率评估协议）"
