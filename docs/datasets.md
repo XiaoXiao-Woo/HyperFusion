@@ -206,6 +206,18 @@ ehu.eus 场景的直链（`.mat`）已写入 `datasets/catalog.yaml`，可用脚
 
 说明：Urbex 将城市级 3D 定位视为主动搜索任务，由视觉语言模型智能体在多视图间探索并经强化学习决定"看哪里、如何细化、何时作答"，不依赖预先计算的实例候选。
 
+**城市级语言-3D 推理基准（CitySTAR 及同期工作）**
+
+CitySTAR（arXiv 2609.19911，Zhang 等）把城市级 3D 定位视为推理而非匹配：无需训练，先把大规模城市点云转为开放词汇对象的场景图，用代码生成式 LLM 工具收集属性与空间关系证据，再为查询与每个候选周边分别构建超图做双向拓扑一致性校验，最后结合 2D 视觉证据反思决策。它在 CityRefer 与 CityAnchor（即 STPLS3D-Refer）上评估，并提出新基准 CitySTAR-3D。
+
+| 数据集 | 内容 | 规模 | 下载 | 许可 / 引用 |
+|---|---|---|---|---|
+| **CitySTAR-3D** | 面向推理型开放词汇定位：更广语义覆盖、更完整实例框、含属性 / 上下文实体 / 包含关系 / 邻接关系 / 空间布局的复杂描述 | 1,286 组文本-对象对（SensatUrban 686 + STPLS3D 600），15 个语义组 | 截至整理日未发布，关注 arXiv 2609.19911 | Zhang et al., 2026 |
+| **3DCity-LLM-1.2M / City-3DQA** | 基于 SensatUrban、UrbanBIS、City-BIS 点云构建的城市级 3D 问答指令数据与基准 | 约 120 万条 QA | https://github.com/SYSU-3DSTAILab/3D-City-LLM | Zhou et al., arXiv 2603.23447 |
+| **GeoEval3D**（GeoProg3D） | 基于分层 3D 高斯的城市级 3D 语言场评测：定位、空间推理、比较、计数、测量 | 952 组问答 | 代码链接见 arXiv 2506.23352 | Yasuki et al., ICCV 2025 |
+| **OpenCity3D 基准** | 由航拍网格渲染 RGB-D 构建语言增强点云，评测建筑年代、房价、人口密度等城市问答 | — | https://opencity3d.github.io | Bieri et al., WACV 2025 |
+| **OpenUrban3D** | 大规模城市点云无标注开放词汇语义分割（方法，基于 SensatUrban 等） | — | 见 arXiv 2509.10842 | 2025 |
+
 ### 8.2 城市级点云 / 网格语义与实例分割
 
 | 数据集 | 采集方式 | 规模 | 类别 | 下载 | 许可 / 引用 |

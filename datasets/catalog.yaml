@@ -1005,3 +1005,39 @@ datasets:
     homepage: https://mediatum.ub.tum.de/1454690
     access: registration
     license: CC BY 4.0
+
+  # ---------------------------------------------------------------- 8.1 补充：城市级语言-3D 推理基准
+  - id: citystar_3d
+    name: CitySTAR-3D
+    category: city3d
+    base: [sensaturban, stpls3d]
+    pairs: 1286
+    semantic_groups: 15
+    homepage: https://arxiv.org/abs/2609.19911
+    access: registration
+    note: 截至 2026-10-16 未发布
+    citation: Zhang et al., CitySTAR, 2026
+
+  - id: city3dqa
+    name: 3DCity-LLM-1.2M / City-3DQA
+    category: city3d
+    base: [sensaturban, urbanbis]
+    qa_pairs: 1200000
+    homepage: https://github.com/SYSU-3DSTAILab/3D-City-LLM
+    access: github
+    citation: 3DCity-LLM, arXiv 2603.23447
+
+  - id: geoeval3d
+    name: GeoEval3D (GeoProg3D)
+    category: city3d
+    qa_pairs: 952
+    homepage: https://arxiv.org/abs/2506.23352
+    access: github
+    citation: Yasuki et al., GeoProg3D, ICCV 2025
+
+  - id: opencity3d
+    name: OpenCity3D benchmark
+    category: city3d
+    homepage: https://opencity3d.github.io
+    access: registration
+    citation: Bieri et al., OpenCity3D, WACV 2025
