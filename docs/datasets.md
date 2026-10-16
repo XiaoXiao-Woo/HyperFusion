@@ -192,7 +192,9 @@ ehu.eus 场景的直链（`.mat`）已写入 `datasets/catalog.yaml`，可用脚
 
 ## 8. 城市级 3D 场景与视觉定位（点云 / 多视图）
 
-来源：Urbex（arXiv 2610.18356，NeurIPS 2026）及其前序工作 CityRefer、CityAnchor。此类数据由无人机倾斜摄影 / 航空 LiDAR 得到城市级点云，并附自然语言描述，用于城市尺度 3D 视觉定位（3D visual grounding）、语义 / 实例分割；可作为 HyperFusion 中多视图、BEV 与 3D 模态融合的扩展基准。
+来源：Urbex（arXiv 2610.18356，NeurIPS 2026）及其前序工作 CityRefer、CityAnchor。此类数据由无人机倾斜摄影 / 航空 LiDAR 得到城市级点云或网格，部分附自然语言描述，用于城市尺度 3D 视觉定位（3D visual grounding）、语义 / 实例分割、航空导航与具身问答；可作为 HyperFusion 中多视图、BEV 与 3D 模态融合的扩展基准。
+
+### 8.1 城市级 3D 视觉定位（Urbex 相关）
 
 | 数据集 | 内容 | 规模 | 下载 | 许可 / 引用 |
 |---|---|---|---|---|
@@ -203,6 +205,63 @@ ehu.eus 场景的直链（`.mat`）已写入 `datasets/catalog.yaml`，可用脚
 | **Urbex-Data** | Urbex 训练 / 评估数据包：CityRefer 与 STPLS3D 的 BEV 图像、倾斜视图缓存、候选框与划分（`cityrefer_ND`、`cityrefer_NO`、`stpls3d`）；原始点云需另行从 SensatUrban 申请 | — | https://huggingface.co/datasets/vvangfaye/Urbex-Data （`scripts/data/download.sh`，带校验和）；代码 https://github.com/AMAP-ML/Urbex ；模型 https://huggingface.co/vvangfaye/Urbex-4B | Apache-2.0；Wang et al., NeurIPS 2026 |
 
 说明：Urbex 将城市级 3D 定位视为主动搜索任务，由视觉语言模型智能体在多视图间探索并经强化学习决定"看哪里、如何细化、何时作答"，不依赖预先计算的实例候选。
+
+### 8.2 城市级点云 / 网格语义与实例分割
+
+| 数据集 | 采集方式 | 规模 | 类别 | 下载 | 许可 / 引用 |
+|---|---|---|---|---|---|
+| **UrbanBIS** | 无人机倾斜摄影（6 个真实城市场景） | 25 亿点，10.78 km²，3,370 栋建筑实例 | 语义 + 建筑实例 | https://vcc.tech/UrbanBIS | Yang et al., SIGGRAPH 2023 |
+| **WHU-Urban3D** | 机载 LiDAR + 车载 MLS | 多城区，语义 + 实例标注 | — | https://whu3d.com ；`pip install pywhu3d`（百度网盘 / Google Drive） | 武汉大学 |
+| **DALES** | 机载 LiDAR（加拿大 Surrey） | 5 亿点，10 km² | 8 | https://udayton.edu/engineering/research/centers/vision_lab/research/was_data_analysis_and_processing/dale.php | Varney et al., CVPRW 2020 |
+| **Hessigheim 3D (H3D)** | 无人机 LiDAR + 多视立体，点云 + 带纹理网格 | 1.25 亿点，0.19 km² | 11 | https://ifpwww.ifp.uni-stuttgart.de/benchmark/hessigheim/default.aspx | Kölle et al., ISPRS OJPRS 2021 |
+| **SUM（Semantic Urban Meshes）** | 赫尔辛基带纹理三角网格 + 采样点云 | 约 4 km² | 6 | https://3d.bk.tudelft.nl/opendata/sum/ | Gao et al., ISPRS JPRS 2021 |
+| **Campus3D** | 无人机摄影测量点云（NUS 校园），分层标签 | 约 1 km² | 分层多级 | https://github.com/shinke-li/Campus3D ；http://www.aicampus3d.com/ | Li et al., ACM MM 2020 |
+| **Toronto-3D** | 车载 LiDAR（Teledyne Optech Maverick） | 7,830 万点，约 1 km 道路 | 8 | https://github.com/WeikaiTan/Toronto-3D （OneDrive / 百度网盘） | CC BY-NC 4.0；Tan et al., CVPRW 2020 |
+| **Paris-Lille-3D** | 车载 LiDAR（巴黎、里尔） | 1.43 亿点，约 2 km | 9（粗）/ 50（细） | https://npm3d.fr/paris-lille-3d | Roynard et al., IJRR 2018 |
+| **Semantic3D** | 地面站式 LiDAR（瑞士城乡） | 约 40 亿点 | 8 | http://www.semantic3d.net/ | Hackel et al., ISPRS Annals 2017 |
+| **ISPRS Vaihingen 3D** | 机载 LiDAR | 约 120 万点 | 9 | https://www.isprs.org/education/benchmarks/UrbanSemLab/ | 与第 7 节 Potsdam/Vaihingen 同源 |
+
+### 8.3 语言驱动的航空导航 / 具身问答 / 城市视频
+
+| 数据集 | 内容 | 规模 | 环境 | 下载 | 许可 / 引用 |
+|---|---|---|---|---|---|
+| **CityNav** | 语言目标航空导航，建立在 SensatUrban 点云 + CityRefer 对象之上 | 32,637 条人类演示轨迹与描述 | 真实城市点云栅格化 | https://github.com/water-cookie/citynav ；https://water-cookie.github.io/city-nav-proj/ | 数据 CC BY 4.0；Lee et al., 2024 |
+| **AerialVLN** | 无人机视觉语言导航 | 8,446 条飞行路径 × 3 条指令 | 25 个城市级 UE/AirSim 场景 | https://github.com/AirVLN/AirVLN | Liu et al., ICCV 2023 |
+| **OpenFly** | 航空 VLN 平台 + 大规模基准 + OpenFly-Agent | 10 万条轨迹，18 个场景 | UE、AirSim、GTA V、Google Earth、3DGS | https://github.com/SHAILAB-IPEC/OpenFly-Platform ；https://huggingface.co/datasets/IPEC-COMMUNITY/OpenFly | MIT；Gao et al., 2025 |
+| **EmbodiedCity** | 城市具身智能基准平台（北京国贸区域，含真实人车流） | 多任务数据集 | UE + AirSim 仿真器 | https://github.com/tsinghua-fib-lab/EmbodiedCity | Gao et al., 2024 |
+| **CityEQA-EC** | 城市空间具身问答 | 1,412 个人工标注任务，6 类 | 基于 EmbodiedCity 仿真器 | https://github.com/tsinghua-fib-lab/CityEQA | Zhao et al., EMNLP 2025 |
+| **UrbanVideo-Bench** | 无人机第一视角城市视频的具身认知评测 | 1,500 段视频，5,200 道选择题 | 真实 + 仿真 | https://github.com/EmbodiedCity/UrbanVideo-Bench | Zhao et al., ACL 2025 |
+
+### 8.4 城市级多视图三维重建（NeRF / 3DGS）
+
+| 数据集 | 内容 | 规模 | 下载 | 许可 / 引用 |
+|---|---|---|---|---|
+| **UrbanScene3D** | 真实 + 合成城市场景的高分辨率航拍影像、LiDAR、网格与 UE/AirSim 仿真器 | 12.8 万张影像，16 个场景，约 136 km² | https://vcc.tech/UrbanScene3D | Lin et al., ECCV 2022 |
+| **MatrixCity** | UE5 City Sample 渲染的合成城市，航拍 + 街景，含深度 / 法线 / 材质 / 点云 | Small City 2.7 km²，Big City 25.3 km² | https://github.com/city-super/MatrixCity ；https://huggingface.co/datasets/BoDai/MatrixCity | Apache-2.0（代码）；Li et al., ICCV 2023 |
+| **Mill-19（Mega-NeRF）** | 无人机航拍的 Building、Rubble 两个场景 | 每场景约 2 千张影像 | https://github.com/cmusatyalab/mega-nerf | Turki et al., CVPR 2022 |
+| **GauU-Scene** | 无人机 + Zenmuse L1 LiDAR 采集的大场景 3DGS 基准 | 约 1.5–6.5 km²（论文版本间不一致） | 见论文 arXiv 2404.04880 项目页 | Xiong et al., 2024 |
+| **BlendedMVS / DroneDeploy 等** | 通用多视图立体数据，含部分航拍场景 | — | https://github.com/YoYo000/BlendedMVS | 作为补充 |
+
+### 8.5 卫星 / 航空三维重建与 3D 变化检测
+
+| 数据集 | 内容 | 规模 | 下载 | 许可 / 引用 |
+|---|---|---|---|---|
+| **DFC2019 / US3D（Urban Semantic 3D）** | WorldView-3 多视卫星影像 + 机载 LiDAR + 语义标签 + DSM，覆盖 Jacksonville、Omaha、Atlanta | 数千组瓦片 | https://ieee-dataport.org/open-access/urban-semantic-3d-dataset | 需 IEEE DataPort 账号；Le Saux et al., GRSM 2019 |
+| **WHU-TLC（SatMVS）** | ZY-3 三线阵三视卫星影像 + RPC + 5 m DSM 真值 | 多区域 | https://gpcv.whu.edu.cn/data/whu_tlc.html | Gao et al., ICCV 2021 |
+| **WHU-Stereo** | GF-7 卫星立体像对 + LiDAR DSM | 1,757 对 | https://github.com/Sheng029/WHU-Stereo | Li et al., 2023 |
+| **Urb3DCD / V2 / Cls** | 仿真城市点云 3D 变化检测 | 多难度子集 | https://ieee-dataport.org （检索 Urb3DCD）；代码 https://github.com/wangle53/3DCDNet-Urb3DCD | de Gélis et al., Remote Sensing 2021 |
+
+### 8.6 遥感影像 2D 视觉定位 / 指代分割
+
+与城市级 3D 定位任务同源的 2D 版本：给定自然语言描述，在遥感影像中定位目标框或分割掩码。
+
+| 数据集 | 任务 | 规模 | 影像来源 | 下载 | 许可 / 引用 |
+|---|---|---|---|---|---|
+| **DIOR-RSVG** | 视觉定位（框） | 38,320 条描述，17,402 张影像 | DIOR | https://github.com/ZhanYang-nwpu/RSVG-pytorch | Zhan et al., IEEE TGRS 2023 |
+| **OPT-RSVG** | 视觉定位（框） | 48,952 条描述 | 多源光学 | https://github.com/like413/OPT-RSVG | Li et al., 2024 |
+| **VRSBench** | 描述 + VQA + 定位 | 29,614 张影像，52,472 条定位，123,221 条 QA | DOTA 等 | https://github.com/lx709/VRSBench ；https://huggingface.co/datasets/xiang709/VRSBench | 文本 CC BY 4.0；影像限学术；Li et al., NeurIPS 2024 D&B |
+| **RRSIS-D** | 指代分割（掩码） | 17,402 组影像-描述-掩码 | DIOR | https://github.com/Lsan2401/RMSIN （Google Drive / 百度网盘） | Liu et al., CVPR 2024 |
+| **RefSegRS** | 指代分割（掩码） | 4,420 组 | SkyScapes 航拍 | https://github.com/zhu-xlab/rrsis ；https://huggingface.co/datasets/JessicaYuan/RefSegRS | CC BY 4.0；Yuan et al., IEEE TGRS 2024 |
 
 ---
 

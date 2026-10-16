@@ -586,3 +586,268 @@ datasets:
     access: cloud
     license: Apache-2.0
     citation: Wang et al., Urbex - Agentic Spatial Grounding for City-Scale 3D Scenes, NeurIPS 2026 (arXiv 2610.18356)
+
+  # ---------------------------------------------------------------- 8.2 城市级点云 / 网格分割
+  - id: urbanbis
+    name: UrbanBIS
+    category: city3d
+    sensor: 无人机倾斜摄影点云（6 城）
+    points: 2.5e9
+    area_km2: 10.78
+    homepage: https://vcc.tech/UrbanBIS
+    access: registration
+    citation: Yang et al., UrbanBIS, SIGGRAPH 2023
+
+  - id: whu_urban3d
+    name: WHU-Urban3D
+    category: city3d
+    sensor: 机载 LiDAR + 车载 MLS
+    homepage: https://whu3d.com
+    pypi_package: pywhu3d
+    access: cloud
+
+  - id: dales
+    name: DALES
+    category: city3d
+    sensor: 机载 LiDAR
+    points: 5e8
+    area_km2: 10
+    classes: 8
+    homepage: https://udayton.edu/engineering/research/centers/vision_lab/research/was_data_analysis_and_processing/dale.php
+    access: registration
+    citation: Varney et al., CVPRW 2020
+
+  - id: h3d
+    name: Hessigheim 3D (H3D)
+    category: city3d
+    sensor: 无人机 LiDAR + 多视立体网格
+    points: 1.25e8
+    area_km2: 0.19
+    classes: 11
+    homepage: https://ifpwww.ifp.uni-stuttgart.de/benchmark/hessigheim/default.aspx
+    access: registration
+    citation: Kölle et al., ISPRS OJPRS 2021
+
+  - id: sum_meshes
+    name: SUM (Semantic Urban Meshes)
+    category: city3d
+    sensor: 赫尔辛基带纹理网格 + 采样点云
+    area_km2: 4
+    classes: 6
+    homepage: https://3d.bk.tudelft.nl/opendata/sum/
+    access: direct
+    citation: Gao et al., ISPRS JPRS 2021
+
+  - id: campus3d
+    name: Campus3D
+    category: city3d
+    sensor: 无人机摄影测量点云（分层标签）
+    homepage: https://github.com/shinke-li/Campus3D
+    mirrors:
+      - http://www.aicampus3d.com/
+    access: registration
+    citation: Li et al., ACM MM 2020
+
+  - id: toronto3d
+    name: Toronto-3D
+    category: city3d
+    sensor: 车载 LiDAR
+    points: 7.83e7
+    classes: 8
+    homepage: https://github.com/WeikaiTan/Toronto-3D
+    access: cloud
+    license: CC BY-NC 4.0
+    citation: Tan et al., CVPRW 2020
+
+  - id: paris_lille_3d
+    name: Paris-Lille-3D
+    category: city3d
+    sensor: 车载 LiDAR
+    points: 1.43e8
+    homepage: https://npm3d.fr/paris-lille-3d
+    access: registration
+    citation: Roynard et al., IJRR 2018
+
+  - id: semantic3d
+    name: Semantic3D
+    category: city3d
+    sensor: 地面站式 LiDAR
+    points: 4e9
+    classes: 8
+    homepage: http://www.semantic3d.net/
+    access: registration
+    citation: Hackel et al., ISPRS Annals 2017
+
+  # ---------------------------------------------------------------- 8.3 航空导航 / 具身
+  - id: citynav
+    name: CityNav
+    category: city3d
+    base: [sensaturban, cityrefer]
+    trajectories: 32637
+    homepage: https://github.com/water-cookie/citynav
+    access: github
+    license: CC BY 4.0
+    citation: Lee et al., CityNav, 2024
+
+  - id: aerialvln
+    name: AerialVLN
+    category: city3d
+    trajectories: 8446
+    scenes: 25
+    homepage: https://github.com/AirVLN/AirVLN
+    access: github
+    citation: Liu et al., ICCV 2023
+
+  - id: openfly
+    name: OpenFly
+    category: city3d
+    trajectories: 100000
+    scenes: 18
+    homepage: https://github.com/SHAILAB-IPEC/OpenFly-Platform
+    mirrors:
+      - https://huggingface.co/datasets/IPEC-COMMUNITY/OpenFly
+    access: cloud
+    license: MIT
+    citation: Gao et al., OpenFly, 2025
+
+  - id: embodiedcity
+    name: EmbodiedCity
+    category: city3d
+    homepage: https://github.com/tsinghua-fib-lab/EmbodiedCity
+    access: github
+    citation: Gao et al., 2024
+
+  - id: cityeqa
+    name: CityEQA-EC
+    category: city3d
+    tasks: 1412
+    homepage: https://github.com/tsinghua-fib-lab/CityEQA
+    access: github
+    citation: Zhao et al., EMNLP 2025
+
+  - id: urbanvideo_bench
+    name: UrbanVideo-Bench
+    category: city3d
+    videos: 1500
+    questions: 5200
+    homepage: https://github.com/EmbodiedCity/UrbanVideo-Bench
+    access: cloud
+    citation: Zhao et al., ACL 2025
+
+  # ---------------------------------------------------------------- 8.4 多视图重建
+  - id: urbanscene3d
+    name: UrbanScene3D
+    category: city3d
+    images: 128000
+    scenes: 16
+    area_km2: 136
+    homepage: https://vcc.tech/UrbanScene3D
+    access: registration
+    citation: Lin et al., ECCV 2022
+
+  - id: matrixcity
+    name: MatrixCity
+    category: city3d
+    area_km2: [2.7, 25.3]
+    homepage: https://github.com/city-super/MatrixCity
+    mirrors:
+      - https://huggingface.co/datasets/BoDai/MatrixCity
+    access: cloud
+    license: Apache-2.0（代码）
+    citation: Li et al., ICCV 2023
+
+  - id: mill19
+    name: Mill-19 (Mega-NeRF)
+    category: city3d
+    scenes: 2
+    homepage: https://github.com/cmusatyalab/mega-nerf
+    access: cloud
+    citation: Turki et al., CVPR 2022
+
+  # ---------------------------------------------------------------- 8.5 卫星三维 / 3D 变化检测
+  - id: us3d
+    name: DFC2019 / US3D (Urban Semantic 3D)
+    category: city3d
+    sensor: WorldView-3 多视卫星影像 + 机载 LiDAR
+    homepage: https://ieee-dataport.org/open-access/urban-semantic-3d-dataset
+    access: registration
+    citation: Le Saux et al., IEEE GRSM 2019
+
+  - id: whu_tlc
+    name: WHU-TLC (SatMVS)
+    category: city3d
+    sensor: ZY-3 三线阵三视影像 + RPC + 5 m DSM
+    homepage: https://gpcv.whu.edu.cn/data/whu_tlc.html
+    access: cloud
+    citation: Gao et al., ICCV 2021
+
+  - id: whu_stereo
+    name: WHU-Stereo
+    category: city3d
+    sensor: GF-7 卫星立体像对 + LiDAR DSM
+    pairs: 1757
+    homepage: https://github.com/Sheng029/WHU-Stereo
+    access: github
+
+  - id: urb3dcd
+    name: Urb3DCD / V2 / Cls
+    category: city3d
+    sensor: 仿真城市点云 3D 变化检测
+    homepage: https://ieee-dataport.org
+    repo: https://github.com/wangle53/3DCDNet-Urb3DCD
+    access: registration
+    citation: de Gélis et al., Remote Sensing 2021
+
+  # ---------------------------------------------------------------- 8.6 遥感影像 2D 视觉定位
+  - id: dior_rsvg
+    name: DIOR-RSVG
+    category: downstream
+    task: visual_grounding
+    descriptions: 38320
+    images: 17402
+    homepage: https://github.com/ZhanYang-nwpu/RSVG-pytorch
+    access: cloud
+    citation: Zhan et al., IEEE TGRS 2023
+
+  - id: opt_rsvg
+    name: OPT-RSVG
+    category: downstream
+    task: visual_grounding
+    descriptions: 48952
+    homepage: https://github.com/like413/OPT-RSVG
+    access: cloud
+
+  - id: vrsbench
+    name: VRSBench
+    category: downstream
+    task: [caption, vqa, visual_grounding]
+    images: 29614
+    grounding: 52472
+    vqa: 123221
+    homepage: https://github.com/lx709/VRSBench
+    mirrors:
+      - https://huggingface.co/datasets/xiang709/VRSBench
+    access: cloud
+    license: 文本 CC BY 4.0；影像限学术
+    citation: Li et al., NeurIPS 2024 Datasets and Benchmarks
+
+  - id: rrsis_d
+    name: RRSIS-D
+    category: downstream
+    task: referring_segmentation
+    triplets: 17402
+    homepage: https://github.com/Lsan2401/RMSIN
+    access: cloud
+    citation: Liu et al., CVPR 2024
+
+  - id: refsegrs
+    name: RefSegRS
+    category: downstream
+    task: referring_segmentation
+    triplets: 4420
+    homepage: https://github.com/zhu-xlab/rrsis
+    mirrors:
+      - https://huggingface.co/datasets/JessicaYuan/RefSegRS
+    access: cloud
+    license: CC BY 4.0
+    citation: Yuan et al., IEEE TGRS 2024
