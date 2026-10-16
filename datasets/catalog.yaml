@@ -392,6 +392,7 @@ datasets:
     pypi: https://github.com/XiaoXiao-Woo/PanCollection
     mirror: https://huggingface.co/datasets/elsting/PanCollection
     format: h5（MS 64×64 / PAN 256×256 训练块；测试 256 降分辨率 + 512 全分辨率）
+    scenes: "WV3: 里约热内卢(2016-05-02, 2016-01-23)、的黎波里(2015-08-31, 2016-03-08)；WV2: 华盛顿特区(2016-08-15)、斯德哥尔摩(2016-08-27)；QB: 印第安纳波利斯；GF2: 广州。测试区为各景扣出的子区，训练块来自同城其余区域"
     access: cloud
     license: GPL-2.0
     citation: Deng et al., Machine Learning in Pansharpening - A Benchmark, from Shallow to Deep Networks, IEEE GRSM 2022

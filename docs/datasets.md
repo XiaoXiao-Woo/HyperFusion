@@ -528,7 +528,7 @@ WorldView 系列（DigitalGlobe，现 Maxar）是全色锐化、亚米级目标�
 
 | 数据集 | 任务 | 卫星 | 规模 | 体积 | 下载 | 许可 |
 |---|---|---|---|---|---|---|
-| **PanCollection WV3 / WV2** | 全色锐化 | WV-3 8 波段（0.31 / 1.24 m）、WV-2 | WV3 训练约 1 万块 + 20/20 测试景；WV2 用于泛化 | WV3 ≈5.6 GB，WV2 ≈0.2 GB | 见第 2 节 | GPL-2.0 |
+| **PanCollection WV3 / WV2** | 全色锐化 | WV-3 8 波段（0.31 / 1.24 m）、WV-2 | WV3 训练约 1 万块 + 20/20 测试景（里约热内卢、的黎波里，FR 全在的黎波里）；WV2 测试 20/20 景（华盛顿特区、斯德哥尔摩） | WV3 ≈5.6 GB，WV2 ≈0.2 GB | 见第 2 节 | GPL-2.0 |
 | **PAirMax** | 全色锐化基准 | WV-2、WV-3、GeoEye-1（Maxar 9 对） | 14 对 FR + RR | 0.54 GB | 见第 2 节 | Maxar / Airbus 评估许可 |
 | **WV2 / WV3 全分辨率测试图** | 全分辨率 QA 协议 | WV-2（Washington、Stockholm）、WV-3（Adelaide、Mexico City） | 各 20 块 512×512 FR + 2048×2048 RR | ≈1 GB（估算） | https://github.com/liangjiandeng/DLPan-Toolbox | 源于 Maxar 样例 |
 | **WV3 VNIR+SWIR 16 波段融合** | 多波段锐化 | WV-3 8 VNIR + 8 SWIR | 仿真 + 真实 WV3 | — | Vivone et al., Information Fusion 2020（数据随 Maxar 样例） | 评估许可 |
