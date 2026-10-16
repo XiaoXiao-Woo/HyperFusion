@@ -1,7 +1,7 @@
 # HyperFusion 遥感数据集清单（机器可读）
 # 字段说明：
 #   id        : 唯一标识，供 tools/download_datasets.py --name 使用
-#   category  : hsi_msi | real_pairs | pansharpening | multimodal | spatiotemporal | sar_optical | downstream | city3d
+#   category  : hsi_msi | real_pairs | pansharpening | multimodal | spatiotemporal | sar_optical | downstream | general | city3d
 #   access    : direct（可直链下载）| registration（需注册 / 申请）| cloud（网盘 / 云盘）| github
 #   files     : 直链文件列表，仅 access=direct 的条目填写
 # 人类可读说明见 docs/datasets.md。整理日期 2026-10-16。
@@ -903,3 +903,105 @@ datasets:
     access: registration
     note: 以卫星视角影像为条件生成航拍 3DGS；200 m × 200 m 瓦片
     citation: Qian et al., GS-Voxel, 2026
+
+  # ---------------------------------------------------------------- 7 通用遥感基准
+  - id: uc_merced
+    name: UC Merced Land Use
+    category: general
+    images: 2100
+    size: [256, 256]
+    classes: 21
+    homepage: http://weegee.vision.ucmerced.edu/datasets/landuse.html
+    access: direct
+
+  - id: aid
+    name: AID
+    category: general
+    images: 10000
+    size: [600, 600]
+    classes: 30
+    homepage: https://captain-whu.github.io/AID/
+    access: cloud
+
+  - id: nwpu_resisc45
+    name: NWPU-RESISC45
+    category: general
+    images: 31500
+    size: [256, 256]
+    classes: 45
+    homepage: https://gcheng-nwpu.github.io/
+    access: cloud
+
+  - id: eurosat
+    name: EuroSAT (RGB / MS)
+    category: general
+    images: 27000
+    size: [64, 64]
+    classes: 10
+    homepage: https://github.com/phelber/EuroSAT
+    access: direct
+
+  - id: bigearthnet
+    name: BigEarthNet (v1 S2/S1, v2 reBEN)
+    category: general
+    patches: 590326
+    classes: 19
+    homepage: https://bigearth.net
+    access: direct
+
+  - id: isprs_potsdam_vaihingen
+    name: ISPRS Potsdam / Vaihingen 2D
+    category: general
+    classes: 6
+    homepage: https://www.isprs.org/education/benchmarks/UrbanSemLab/
+    access: registration
+
+  - id: loveda
+    name: LoveDA
+    category: general
+    images: 5987
+    size: [1024, 1024]
+    classes: 7
+    homepage: https://github.com/Junjue-Wang/LoveDA
+    access: cloud
+
+  - id: gid
+    name: GID (Gaofen Image Dataset)
+    category: general
+    images: 150
+    size: [6800, 7200]
+    homepage: https://x-ypan.github.io/GID/
+    access: cloud
+
+  - id: dota
+    name: DOTA v1.0 / v2.0
+    category: general
+    images: [2806, 11268]
+    homepage: https://captain-whu.github.io/DOTA/
+    access: cloud
+
+  - id: dior
+    name: DIOR
+    category: general
+    images: 23463
+    size: [800, 800]
+    classes: 20
+    homepage: https://gcheng-nwpu.github.io/
+    access: cloud
+
+  - id: s2looking
+    name: S2Looking
+    category: general
+    pairs: 5000
+    size: [1024, 1024]
+    homepage: https://github.com/S2Looking/Dataset
+    access: cloud
+
+  - id: so2sat_lcz42
+    name: So2Sat LCZ42
+    category: sar_optical
+    size: [32, 32]
+    classes: 17
+    homepage: https://mediatum.ub.tum.de/1454690
+    access: registration
+    license: CC BY 4.0
